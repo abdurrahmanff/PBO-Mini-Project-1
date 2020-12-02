@@ -9,8 +9,8 @@ public class MainApp {
 		inp[1] = JOptionPane.showInputDialog("Enter Triangle's b-side");
 		inp[2] = JOptionPane.showInputDialog("Enter Triangle's c-side");
 
-		Triangle triangle = new Triangle(Integer.parseInt(inp[0]),
-				Integer.parseInt(inp[1]), Integer.parseInt(inp[2]));
+		Triangle triangle = new Triangle(Double.parseDouble(inp[0]),
+				Double.parseDouble(inp[1]), Double.parseDouble(inp[2]));
 		
 		JOptionPane.showMessageDialog(null, 
 				"The area of triangle is " + triangle.getArea() + 
