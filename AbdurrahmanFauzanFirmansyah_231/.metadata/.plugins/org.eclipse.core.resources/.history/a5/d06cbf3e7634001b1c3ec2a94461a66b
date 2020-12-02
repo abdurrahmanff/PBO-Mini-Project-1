@@ -4,7 +4,7 @@ import javax.swing.JOptionPane;
 public class MainApp {
 
 	public static void main(String[] args) {
-		String inputanString =
+		String inputanString[2] =
 				JOptionPane.showInputDialog("Enter Circle's radius");
 		
 		Circle circ = new Circle (Integer.parseInt(inputanString));

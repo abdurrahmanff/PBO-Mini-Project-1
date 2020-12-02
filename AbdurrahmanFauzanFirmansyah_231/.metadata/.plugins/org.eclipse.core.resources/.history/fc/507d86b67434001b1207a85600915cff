@@ -17,7 +17,7 @@ public class LabelFrame extends JFrame {
 		Icon bug = new ImageIcon(getClass().getResource("foto.jpg"));
 		
 		label3 = new JLabel();
-		label3.setText("Abdurrahman Fauzan Firmansyah 05111940000231");
+		label3.setText("<html>Abdurrahman Fauzan Firmansyah<br/>05111940000231<html>");
 		label3.setIcon(bug);
 		label3.setHorizontalTextPosition(SwingConstants.CENTER);
 		label3.setVerticalTextPosition(SwingConstants.BOTTOM);
