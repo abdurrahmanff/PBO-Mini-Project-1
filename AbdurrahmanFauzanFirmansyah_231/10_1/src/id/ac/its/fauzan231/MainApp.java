@@ -7,7 +7,7 @@ public class MainApp {
 		String inputanString =
 				JOptionPane.showInputDialog("Enter Circle's radius");
 		
-		Circle circ = new Circle (Integer.parseInt(inputanString));
+		Circle circ = new Circle (Double.parseDouble(inputanString));
 		
 		JOptionPane.showMessageDialog(null, 
 				"The area of circle is " + circ.getArea() + 
