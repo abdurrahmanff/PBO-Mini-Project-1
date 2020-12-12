@@ -1,4 +1,4 @@
-package id.ac.its.kkk.collisiondetection;
+package id.ac.its.aff231yz160zlp118.collisiondetection;
 
 import java.awt.Color;
 import java.awt.Dimension;

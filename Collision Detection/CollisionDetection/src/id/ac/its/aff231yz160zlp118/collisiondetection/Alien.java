@@ -1,4 +1,4 @@
-package id.ac.its.kkk.collisiondetection;
+package id.ac.its.aff231yz160zlp118.collisiondetection;
 
 public class Alien extends Sprite {
 	private final int INITIAL_X = 400;

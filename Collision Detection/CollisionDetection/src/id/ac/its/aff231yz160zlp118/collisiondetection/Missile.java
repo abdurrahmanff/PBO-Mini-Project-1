@@ -1,4 +1,4 @@
-package id.ac.its.kkk.collisiondetection;
+package id.ac.its.aff231yz160zlp118.collisiondetection;
 
 public class Missile extends Sprite {
 	private final int BOARD_WIDTH = 390;
