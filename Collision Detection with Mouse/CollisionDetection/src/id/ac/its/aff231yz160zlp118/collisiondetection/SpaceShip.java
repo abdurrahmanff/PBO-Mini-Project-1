@@ -1,31 +1,32 @@
 package id.ac.its.aff231yz160zlp118.collisiondetection;
 
 import java.awt.event.KeyEvent;
+import java.awt.event.MouseEvent;
 import java.util.ArrayList;
 import java.util.List;
 
 public class SpaceShip extends Sprite {
-	private int dx;
-	private int dy;
-	private List<Missile> missiles;
-	
-	public SpaceShip(int x, int y) {
-		super(x, y);
-		
-		initCraft();
-	}
-	
-	private void initCraft() {
-		missiles = new ArrayList<>();
-		loadImage("src/resources/spaceship.png");
-		getImageDimensions();
-	}
+    private int dx;
+    private int dy;
+    private List<Missile> missiles;
 
-	public List<Missile> getMissiles() {
-		return missiles;
-	}
-	
-	public void move() {
+    public SpaceShip(int x, int y) {
+        super(x, y);
+
+        initCraft();
+    }
+
+    private void initCraft() {
+        missiles = new ArrayList<>();
+        loadImage("src/resources/spaceship.png");
+        getImageDimensions();
+    }
+
+    public List<Missile> getMissiles() {
+        return missiles;
+    }
+
+    public void move() {
         x += dx;
         y += dy;
 
@@ -37,8 +38,8 @@ public class SpaceShip extends Sprite {
             y = 1;
         }
     }
-	
-	public void keyPressed(KeyEvent e) {
+
+    public void keyPressed(KeyEvent e) {
 
         int key = e.getKeyCode();
 
@@ -86,5 +87,37 @@ public class SpaceShip extends Sprite {
         if (key == KeyEvent.VK_DOWN) {
             dy = 0;
         }
+    }
+
+    public void mouseClicked(MouseEvent e) {
+        fire();
+
+    }
+
+    public void mousePressed(MouseEvent e) {
+        mouseClicked(e);
+    }
+
+    public void mouseReleased(MouseEvent e) {
+
+    }
+
+    public void mouseEntered(MouseEvent e) {
+
+    }
+
+    public void mouseExited(MouseEvent e) {
+        x = e.getX();
+        y = e.getY();
+    }
+
+    public void mouseDragged(MouseEvent e) {
+        fire();
+        mouseMoved(e);
+    }
+
+    public void mouseMoved(MouseEvent e) {
+        x = e.getX();
+        y = e.getY();
     }
 }
