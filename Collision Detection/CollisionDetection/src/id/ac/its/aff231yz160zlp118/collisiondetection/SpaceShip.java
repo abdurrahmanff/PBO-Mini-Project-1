@@ -113,7 +113,8 @@ public class SpaceShip extends Sprite {
 
     public void mouseDragged(MouseEvent e) {
         fire();
-        mouseMoved(e);
+        x = e.getX();
+        y = e.getY();
     }
 
     public void mouseMoved(MouseEvent e) {
