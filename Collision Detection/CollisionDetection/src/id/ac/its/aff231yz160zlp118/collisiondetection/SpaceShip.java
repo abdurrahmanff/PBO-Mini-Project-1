@@ -1,6 +1,7 @@
 package id.ac.its.aff231yz160zlp118.collisiondetection;
 
 import java.awt.event.KeyEvent;
+import java.awt.event.MouseEvent;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -86,5 +87,38 @@ public class SpaceShip extends Sprite {
         if (key == KeyEvent.VK_DOWN) {
             dy = 0;
         }
+    }
+
+    public void mouseClicked(MouseEvent e) {
+        fire();
+
+    }
+
+    public void mousePressed(MouseEvent e) {
+	    mouseClicked(e);
+    }
+
+    public void mouseReleased(MouseEvent e) {
+
+    }
+
+    public void mouseEntered(MouseEvent e) {
+
+    }
+
+    public void mouseExited(MouseEvent e) {
+        x = e.getX();
+        y = e.getY();
+    }
+
+    public void mouseDragged(MouseEvent e) {
+        fire();
+        x = e.getX();
+        y = e.getY();
+    }
+
+    public void mouseMoved(MouseEvent e) {
+        x = e.getX();
+        y = e.getY();
     }
 }
