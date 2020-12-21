@@ -53,7 +53,6 @@ public class Board extends JPanel implements ActionListener {
         spaceship = new SpaceShip(ICRAFT_X, ICRAFT_Y);
 
         MouseHandler mouseHandler = new MouseHandler();
-        addMouseListener(mouseHandler);
         addMouseMotionListener(mouseHandler);
 
         initAliens();
@@ -238,32 +237,7 @@ public class Board extends JPanel implements ActionListener {
         }
     }
 
-    private class MouseHandler implements MouseListener, MouseMotionListener {
-        @Override
-        public void mouseClicked(MouseEvent e) {
-            spaceship.mouseClicked(e);
-        }
-
-        @Override
-        public void mousePressed(MouseEvent e) {
-            spaceship.mousePressed(e);
-        }
-
-        @Override
-        public void mouseReleased(MouseEvent e) {
-            spaceship.mouseReleased(e);
-        }
-
-        @Override
-        public void mouseEntered(MouseEvent e) {
-            spaceship.mouseEntered(e);
-        }
-
-        @Override
-        public void mouseExited(MouseEvent e) {
-            spaceship.mouseExited(e);
-        }
-
+    private class MouseHandler implements MouseMotionListener {
         @Override
         public void mouseDragged(MouseEvent e) {
             spaceship.mouseDragged(e);

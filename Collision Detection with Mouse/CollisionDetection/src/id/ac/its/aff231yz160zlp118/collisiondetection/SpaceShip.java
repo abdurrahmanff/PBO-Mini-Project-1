@@ -94,26 +94,6 @@ public class SpaceShip extends Sprite {
         }
     }
 
-    public void mouseClicked(MouseEvent e) {
-    }
-
-    public void mousePressed(MouseEvent e) {
-        mouseClicked(e);
-    }
-
-    public void mouseReleased(MouseEvent e) {
-
-    }
-
-    public void mouseEntered(MouseEvent e) {
-
-    }
-
-    public void mouseExited(MouseEvent e) {
-        x = e.getX();
-        y = e.getY();
-    }
-
     public void mouseDragged(MouseEvent e) {
         mouseMoved(e);
     }
