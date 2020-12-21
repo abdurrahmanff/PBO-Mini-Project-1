@@ -90,8 +90,6 @@ public class SpaceShip extends Sprite {
     }
 
     public void mouseClicked(MouseEvent e) {
-        fire();
-
     }
 
     public void mousePressed(MouseEvent e) {
@@ -112,7 +110,6 @@ public class SpaceShip extends Sprite {
     }
 
     public void mouseDragged(MouseEvent e) {
-        fire();
         mouseMoved(e);
     }
 
