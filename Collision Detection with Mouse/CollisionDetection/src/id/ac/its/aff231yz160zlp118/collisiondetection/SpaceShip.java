@@ -33,9 +33,14 @@ public class SpaceShip extends Sprite {
         if (x < 1) {
             x = 1;
         }
-
+        if (x > 335) {
+            x = 335;
+        }
         if (y < 1) {
             y = 1;
+        }
+        if (y > 255) {
+            y = 255;
         }
     }
 
