@@ -14,6 +14,7 @@ public class Snake extends JFrame {
     MainMenu mainMenu = new MainMenu();
     CreditMenu creditMenu = new CreditMenu();
     LevelSelector levelSelector = new LevelSelector();
+    HighScoreStats highScoreStats = new HighScoreStats();
     boolean isInGame;
 
     public Snake() {
@@ -24,6 +25,7 @@ public class Snake extends JFrame {
         mainMenu = new MainMenu();
         creditMenu.setVisible(false);
         levelSelector.setVisible(false);
+        highScoreStats.setVisible(false);
         MouseHandler mouseHandler = new MouseHandler();
         addMouseListener(mouseHandler);
         mainMenu.setVisible(true);
@@ -49,16 +51,19 @@ public class Snake extends JFrame {
         @Override
         public void mouseClicked(MouseEvent e) {
             if(mainMenu.isVisible()) {
-                if(mainMenu.getButtonClicked(e) == ButtonClicked.PLAY) {
+                if(mainMenu.getButtonClicked(e) != ButtonClicked.NOT_CLICKED) {
                     mainMenu.setVisible(false);
                     getContentPane().remove(mainMenu);
+                }
+                if(mainMenu.getButtonClicked(e) == ButtonClicked.PLAY) {
                     levelSelector.setVisible(true);
                     add(levelSelector);
                 } else if(mainMenu.getButtonClicked(e) == ButtonClicked.CREDITS) {
-                    mainMenu.setVisible(false);
-                    getContentPane().remove(mainMenu);
                     creditMenu.setVisible(true);
                     add(creditMenu);
+                } else if(mainMenu.getButtonClicked(e) == ButtonClicked.HIGH_SCORE) {
+                    highScoreStats.setVisible(true);
+                    add(highScoreStats);
                 }
             } else if(creditMenu.isVisible()) {
                 if(creditMenu.getButtonClicked(e) == ButtonClicked.MAIN_MENU) {
@@ -86,6 +91,11 @@ public class Snake extends JFrame {
                     add(gameBoard);
                     gameBoard.requestFocusInWindow();
                 }
+            } else if(highScoreStats.isVisible() && highScoreStats.getButtonClicked(e) == ButtonClicked.MAIN_MENU) {
+                highScoreStats.setVisible(false);
+                getContentPane().remove(highScoreStats);
+                mainMenu.setVisible(true);
+                add(mainMenu);
             } else if(gameBoard.isVisible() && gameBoard.getButtonClicked(e) == ButtonClicked.MAIN_MENU && !gameBoard.isInGame()) {
                 gameBoard.setVisible(false);
                 getContentPane().remove(gameBoard);

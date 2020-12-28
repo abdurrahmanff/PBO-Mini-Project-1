@@ -4,6 +4,13 @@ import javax.swing.*;
 import java.awt.*;
 
 public class BoardLevel0 extends Board {
+    private final int levelID = 0;
+
+    public BoardLevel0() {
+        super();
+        super.levelID = levelID;
+    }
+
     @Override
     protected void initGame() {
         dots = 3;

@@ -4,7 +4,7 @@ import java.awt.*;
 import java.awt.event.MouseEvent;
 
 public class LevelSelector extends BasePanel {
-    private final int banyakLevel = 1;
+    private static final int banyakLevel = 1;
     Button[] levelSelect = new Button[banyakLevel];
 
     public void paintComponent(Graphics g) {
@@ -16,6 +16,10 @@ public class LevelSelector extends BasePanel {
                     "Level " + Integer.toString(i + 1));
             levelSelect[i].drawComponent(g);
         }
+    }
+
+    public static int getBanyakLevel() {
+        return banyakLevel;
     }
 
     @Override

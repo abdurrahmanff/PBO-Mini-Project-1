@@ -10,6 +10,13 @@ import java.awt.event.ActionListener;
 import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
 import java.awt.event.MouseEvent;
+import java.io.FileNotFoundException;
+import java.io.IOException;
+import java.nio.file.Paths;
+import java.util.Formatter;
+import java.util.FormatterClosedException;
+import java.util.NoSuchElementException;
+import java.util.Scanner;
 import javax.swing.ImageIcon;
 import javax.swing.Timer;
 
@@ -33,11 +40,21 @@ public abstract class Board extends BasePanel implements ActionListener {
     protected boolean upDirection = false;
     protected boolean downDirection = false;
     protected boolean inGame = true;
+    protected int highScore;
+    protected int levelID;
 
     protected Timer timer;
     protected Image ball;
     protected Image apple;
     protected Image head;
+
+    protected abstract void initGame();
+
+    protected abstract void doDrawing(Graphics g);
+
+    protected abstract void checkCollision();
+
+    protected abstract void locateApple();
 
     public Board() {
         super();
@@ -57,8 +74,6 @@ public abstract class Board extends BasePanel implements ActionListener {
         head = iih.getImage();
     }
 
-    protected abstract void initGame();
-
     @Override
     public void paintComponent(Graphics g) {
         super.paintComponent(g);
@@ -66,10 +81,11 @@ public abstract class Board extends BasePanel implements ActionListener {
         doDrawing(g);
     }
 
-    protected abstract void doDrawing(Graphics g);
-
     protected void gameOver(Graphics g) {
-        String msg = "Game Over";
+        String gameOver = "Game Over";
+        getCurrentHighScore();
+        String highScoreStr = String.format("High Score : %d", (highScore > dots ? highScore : dots));
+        saveCurrentHighScore((highScore > dots ? highScore : dots));
         Font small = new Font("Helvetica", Font.BOLD, 14);
         FontMetrics metr = getFontMetrics(small);
 
@@ -77,7 +93,8 @@ public abstract class Board extends BasePanel implements ActionListener {
 
         g.setColor(Color.white);
         g.setFont(small);
-        g.drawString(msg, (B_WIDTH - metr.stringWidth(msg)) / 2, B_HEIGHT / 2 - 60);
+        g.drawString(gameOver, (B_WIDTH - metr.stringWidth(gameOver)) / 2, B_HEIGHT / 2 - 60);
+        g.drawString(highScoreStr, (B_WIDTH - metr.stringWidth(highScoreStr)) / 2, B_HEIGHT / 2 - 85);
     }
 
     public boolean isInGame() {
@@ -116,9 +133,32 @@ public abstract class Board extends BasePanel implements ActionListener {
             y[0] += DOT_SIZE;
     }
 
-    protected abstract void checkCollision();
+    private void getCurrentHighScore() {
+        Scanner input = null;
+        highScore = ReadFromFile.readScore("score" + Integer.toString(levelID) + ".txt");
+    }
 
-    protected abstract void locateApple();
+    private void saveCurrentHighScore(int currentHighScore) {
+        Formatter output = null;
+        try {
+            output = new Formatter("score" + Integer.toString(levelID) + ".txt");
+        } catch (SecurityException securityException) {
+            System.err.println("Write permission denied. Terminating.");
+            System.exit(1);
+        } catch (FileNotFoundException fileNotFoundException) {
+            System.err.println("Error opening file. Terminating.");
+            System.exit(1);
+        }
+        try {
+            output.format("%d", currentHighScore);
+        } catch (FormatterClosedException formatterClosedException) {
+            System.err.println("Error writing to file. Terminating.");
+        } catch (NoSuchElementException elementException) {
+            System.err.println("Invalid input. Please try again");
+        }
+        if(output != null)
+            output.close();
+    }
 
     @Override
     public void actionPerformed(ActionEvent e) {
