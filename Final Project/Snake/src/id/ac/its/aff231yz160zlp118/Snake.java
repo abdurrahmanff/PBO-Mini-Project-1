@@ -10,12 +10,11 @@ import java.net.URISyntaxException;
 import javax.swing.*;
 
 public class Snake extends JFrame {
-    Board gameBoard;
-    MainMenu mainMenu = new MainMenu();
-    CreditMenu creditMenu = new CreditMenu();
-    LevelSelector levelSelector = new LevelSelector();
-    HighScoreStats highScoreStats = new HighScoreStats();
-    boolean isInGame;
+    BasePanel gameBoard;
+    BasePanel mainMenu = new MainMenu();
+    BasePanel creditMenu = new CreditMenu();
+    BasePanel levelSelector = new LevelSelector();
+    BasePanel highScoreStats = new HighScoreStats();
 
     public Snake() {
         initUI();
@@ -96,7 +95,7 @@ public class Snake extends JFrame {
                 getContentPane().remove(highScoreStats);
                 mainMenu.setVisible(true);
                 add(mainMenu);
-            } else if(gameBoard.isVisible() && gameBoard.getButtonClicked(e) == ButtonClicked.MAIN_MENU && !gameBoard.isInGame()) {
+            } else if(gameBoard.isVisible() && gameBoard.getButtonClicked(e) == ButtonClicked.MAIN_MENU && !((Board)gameBoard).isInGame()) {
                 gameBoard.setVisible(false);
                 getContentPane().remove(gameBoard);
                 mainMenu.setVisible(true);
