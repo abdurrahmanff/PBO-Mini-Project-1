@@ -23,8 +23,15 @@ public class Snake extends JFrame {
     }
 
     public static void main(String[] args) {
-
         EventQueue.invokeLater(() -> {
+            JFrame ex = new Snake();
+            ex.setVisible(true);
+        });
+    }
+
+    public static void playGame(JFrame app) {
+        EventQueue.invokeLater(() -> {
+            app.setVisible(false);
             JFrame ex = new Snake();
             ex.setVisible(true);
         });

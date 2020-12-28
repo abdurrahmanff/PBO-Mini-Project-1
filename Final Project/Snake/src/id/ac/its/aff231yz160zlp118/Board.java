@@ -7,10 +7,7 @@ import java.awt.FontMetrics;
 import java.awt.Graphics;
 import java.awt.Image;
 import java.awt.Toolkit;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
-import java.awt.event.KeyAdapter;
-import java.awt.event.KeyEvent;
+import java.awt.event.*;
 import javax.swing.ImageIcon;
 import javax.swing.JPanel;
 import javax.swing.Timer;
@@ -35,7 +32,12 @@ public class Board extends JPanel implements ActionListener {
     private boolean rightDirection = true;
     private boolean upDirection = false;
     private boolean downDirection = false;
-    private boolean inGame = true;
+    private boolean inGame = false;
+    private boolean inMainMenu = true;
+
+    public void setInGame(boolean inGame) {
+        this.inGame = inGame;
+    }
 
     private Timer timer;
     private Image ball;
@@ -109,9 +111,52 @@ public class Board extends JPanel implements ActionListener {
             Toolkit.getDefaultToolkit().sync();
 
         } else {
-
-            gameOver(g);
+            if(inMainMenu)
+                drawMainMenu(g);
+            else
+                gameOver(g);
         }
+    }
+    Button playButton = new Button(50, 100, 50, B_WIDTH, Color.white, "PLAY");
+    public void drawMainMenu(Graphics g) {
+        playButton.drawComponent(g);
+        MouseHandler mouseHandler = new MouseHandler();
+        addMouseListener(mouseHandler);
+    }
+
+    private class MouseHandler implements MouseListener {
+
+        @Override
+        public void mouseClicked(MouseEvent e) {
+            if(playButton.isClicked(e)) {
+                setInMainMenu(false);
+                setInGame(true);
+            }
+        }
+
+        @Override
+        public void mousePressed(MouseEvent e) {
+
+        }
+
+        @Override
+        public void mouseReleased(MouseEvent e) {
+
+        }
+
+        @Override
+        public void mouseEntered(MouseEvent e) {
+
+        }
+
+        @Override
+        public void mouseExited(MouseEvent e) {
+
+        }
+    }
+
+    public void setInMainMenu(boolean inMainMenu) {
+        this.inMainMenu = inMainMenu;
     }
 
     private void gameOver(Graphics g) {
