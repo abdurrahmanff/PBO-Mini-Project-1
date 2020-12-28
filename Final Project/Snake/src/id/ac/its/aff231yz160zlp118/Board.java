@@ -7,19 +7,22 @@ import java.awt.FontMetrics;
 import java.awt.Graphics;
 import java.awt.Image;
 import java.awt.Toolkit;
-import java.awt.event.*;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+import java.awt.event.KeyAdapter;
+import java.awt.event.KeyEvent;
+import java.awt.event.MouseEvent;
 import javax.swing.ImageIcon;
 import javax.swing.JPanel;
 import javax.swing.Timer;
 
-public class Board extends JPanel implements ActionListener {
-
-    private final int B_WIDTH = 300;
-    private final int B_HEIGHT = 300;
+public class Board extends BasePanel implements ActionListener {
     private final int DOT_SIZE = 10;
     private final int ALL_DOTS = 900;
     private final int RAND_POS = 29;
     private final int DELAY = 140;
+
+    Button mainMenuButton = new Button(135, 100, 50, B_WIDTH, Color.darkGray, Color.white, "MAIN MENU");
 
     private final int x[] = new int[ALL_DOTS];
     private final int y[] = new int[ALL_DOTS];
@@ -32,12 +35,7 @@ public class Board extends JPanel implements ActionListener {
     private boolean rightDirection = true;
     private boolean upDirection = false;
     private boolean downDirection = false;
-    private boolean inGame = false;
-    private boolean inMainMenu = true;
-
-    public void setInGame(boolean inGame) {
-        this.inGame = inGame;
-    }
+    private boolean inGame = true;
 
     private Timer timer;
     private Image ball;
@@ -45,17 +43,8 @@ public class Board extends JPanel implements ActionListener {
     private Image head;
 
     public Board() {
-
-        initBoard();
-    }
-
-    private void initBoard() {
-
+        super();
         addKeyListener(new TAdapter());
-        setBackground(Color.black);
-        setFocusable(true);
-
-        setPreferredSize(new Dimension(B_WIDTH, B_HEIGHT));
         loadImages();
         initGame();
     }
@@ -111,52 +100,8 @@ public class Board extends JPanel implements ActionListener {
             Toolkit.getDefaultToolkit().sync();
 
         } else {
-            if(inMainMenu)
-                drawMainMenu(g);
-            else
-                gameOver(g);
+            gameOver(g);
         }
-    }
-    Button playButton = new Button(50, 100, 50, B_WIDTH, Color.white, "PLAY");
-    public void drawMainMenu(Graphics g) {
-        playButton.drawComponent(g);
-        MouseHandler mouseHandler = new MouseHandler();
-        addMouseListener(mouseHandler);
-    }
-
-    private class MouseHandler implements MouseListener {
-
-        @Override
-        public void mouseClicked(MouseEvent e) {
-            if(playButton.isClicked(e)) {
-                setInMainMenu(false);
-                setInGame(true);
-            }
-        }
-
-        @Override
-        public void mousePressed(MouseEvent e) {
-
-        }
-
-        @Override
-        public void mouseReleased(MouseEvent e) {
-
-        }
-
-        @Override
-        public void mouseEntered(MouseEvent e) {
-
-        }
-
-        @Override
-        public void mouseExited(MouseEvent e) {
-
-        }
-    }
-
-    public void setInMainMenu(boolean inMainMenu) {
-        this.inMainMenu = inMainMenu;
     }
 
     private void gameOver(Graphics g) {
@@ -165,9 +110,21 @@ public class Board extends JPanel implements ActionListener {
         Font small = new Font("Helvetica", Font.BOLD, 14);
         FontMetrics metr = getFontMetrics(small);
 
+        mainMenuButton.drawComponent(g);
+
         g.setColor(Color.white);
         g.setFont(small);
-        g.drawString(msg, (B_WIDTH - metr.stringWidth(msg)) / 2, B_HEIGHT / 2);
+        g.drawString(msg, (B_WIDTH - metr.stringWidth(msg)) / 2, B_HEIGHT / 2 - 60);
+    }
+
+    public boolean isInGame() {
+        return inGame;
+    }
+
+    public ButtonClicked getButtonClicked(MouseEvent e) {
+        if(mainMenuButton.isClicked(e))
+            return ButtonClicked.MAIN_MENU;
+        return ButtonClicked.NOT_CLICKED;
     }
 
     private void checkApple() {
