@@ -5,8 +5,8 @@ import java.awt.Graphics;
 import java.awt.event.MouseEvent;
 
 public class MainMenu extends BasePanel {
-    Button playButton = new Button(55, 100, 50, B_WIDTH, Color.darkGray, Color.white, "PLAY");
-    Button creditButton = new Button(135, 100, 50, B_WIDTH, Color.darkGray, Color.white, "CREDITS");
+    Button playButton = new Button(55, 100, 50, B_WIDTH, "PLAY");
+    Button creditButton = new Button(135, 100, 50, B_WIDTH, "CREDITS");
 
     @Override
     public void paintComponent(Graphics g) {

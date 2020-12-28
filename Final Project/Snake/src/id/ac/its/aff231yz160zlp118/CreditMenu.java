@@ -7,7 +7,8 @@ import java.awt.Graphics;
 import java.awt.event.MouseEvent;
 
 public class CreditMenu extends BasePanel {
-    Button mainMenuButton = new Button(135, 100, 50, B_WIDTH, Color.darkGray, Color.white, "MAIN MENU");
+    Button mainMenuButton = new Button(135, 100, 50, B_WIDTH, "MAIN MENU");
+    Button referenceButton = new Button(225, 100, 50, B_WIDTH, "REFERENCE");
 
     @Override
     public void paintComponent(Graphics g) {
@@ -24,11 +25,14 @@ public class CreditMenu extends BasePanel {
             g.drawString(devName[i], (B_WIDTH - metr.stringWidth(devName[i])) / 2, B_HEIGHT / 2 - 90 + 20 * i + metr.getHeight());
         mainMenuButton.setyCenter(170);
         mainMenuButton.drawComponent(g);
+        referenceButton.drawComponent(g);
     }
 
     public ButtonClicked getButtonClicked(MouseEvent e) {
         if(mainMenuButton.isClicked(e))
             return ButtonClicked.MAIN_MENU;
+        else if(referenceButton.isClicked(e))
+            return ButtonClicked.REFERENCE;
         return ButtonClicked.NOT_CLICKED;
     }
 }

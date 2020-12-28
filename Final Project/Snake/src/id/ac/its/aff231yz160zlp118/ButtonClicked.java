@@ -4,6 +4,8 @@ public enum ButtonClicked {
     PLAY(1),
     CREDITS(2),
     MAIN_MENU(3),
+    LEVEL_0(10),
+    REFERENCE(99),
     NOT_CLICKED(0);
 
     private final int value;

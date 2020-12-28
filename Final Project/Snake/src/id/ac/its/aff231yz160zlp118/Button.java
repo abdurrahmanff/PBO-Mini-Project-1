@@ -16,20 +16,18 @@ public class Button extends JPanel {
     private final int width;
     private final int height;
     private final int windowWidth;
-    private final Color buttonColor;
-    private final Color fontColor;
+    private final Color buttonColor = Color.DARK_GRAY;
+    private final Color fontColor = Color.WHITE;
     private final String buttonMsg;
     private int xFrame;
     private int yFrame;
     Rectangle frame;
 
-    public Button(int yCenter, int width, int height, int windowWidth, Color buttonColor, Color fontColor, String buttonMsg) {
+    public Button(int yCenter, int width, int height, int windowWidth, String buttonMsg) {
         this.yCenter = yCenter;
         this.width = width;
         this.height = height;
         this.windowWidth = windowWidth;
-        this.buttonColor = buttonColor;
-        this.fontColor = fontColor;
         this.buttonMsg = buttonMsg;
         this.xFrame = (windowWidth - width) / 2;
         this.yFrame = yCenter - height / 2;

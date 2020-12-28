@@ -2,14 +2,18 @@ package id.ac.its.aff231yz160zlp118;
 
 import com.sun.tools.javac.Main;
 
-import java.awt.EventQueue;
+import java.awt.*;
 import java.awt.event.*;
+import java.io.IOException;
+import java.net.URI;
+import java.net.URISyntaxException;
 import javax.swing.*;
 
 public class Snake extends JFrame {
     Board gameBoard;
-    MainMenu mainMenu;
-    CreditMenu creditMenu;
+    MainMenu mainMenu = new MainMenu();
+    CreditMenu creditMenu = new CreditMenu();
+    LevelSelector levelSelector = new LevelSelector();
     boolean isInGame;
 
     public Snake() {
@@ -18,8 +22,8 @@ public class Snake extends JFrame {
 
     private void initUI() {
         mainMenu = new MainMenu();
-        creditMenu = new CreditMenu();
         creditMenu.setVisible(false);
+        levelSelector.setVisible(false);
         MouseHandler mouseHandler = new MouseHandler();
         addMouseListener(mouseHandler);
         mainMenu.setVisible(true);
@@ -48,21 +52,40 @@ public class Snake extends JFrame {
                 if(mainMenu.getButtonClicked(e) == ButtonClicked.PLAY) {
                     mainMenu.setVisible(false);
                     getContentPane().remove(mainMenu);
-                    gameBoard = new Board();
-                    gameBoard.setVisible(true);
-                    add(gameBoard);
-                    gameBoard.requestFocusInWindow();
+                    levelSelector.setVisible(true);
+                    add(levelSelector);
                 } else if(mainMenu.getButtonClicked(e) == ButtonClicked.CREDITS) {
                     mainMenu.setVisible(false);
                     getContentPane().remove(mainMenu);
                     creditMenu.setVisible(true);
                     add(creditMenu);
                 }
-            } else if(creditMenu.isVisible() && creditMenu.getButtonClicked(e) == ButtonClicked.MAIN_MENU) {
-                creditMenu.setVisible(false);
-                getContentPane().remove(creditMenu);
-                mainMenu.setVisible(true);
-                add(mainMenu);
+            } else if(creditMenu.isVisible()) {
+                if(creditMenu.getButtonClicked(e) == ButtonClicked.MAIN_MENU) {
+                    creditMenu.setVisible(false);
+                    getContentPane().remove(creditMenu);
+                    mainMenu.setVisible(true);
+                    add(mainMenu);
+                } else if(creditMenu.getButtonClicked(e) == ButtonClicked.REFERENCE) {
+                    Desktop desktop = Desktop.getDesktop();
+                    try {
+                        URI oURL = new URI("http://zetcode.com/javagames/snake/");
+                        desktop.browse(oURL);
+                    } catch (URISyntaxException | IOException exception) {
+                        exception.printStackTrace();
+                    }
+                }
+            } else if (levelSelector.isVisible()) {
+                if(levelSelector.getButtonClicked(e) != ButtonClicked.NOT_CLICKED) {
+                    levelSelector.setVisible(false);
+                    getContentPane().remove(levelSelector);
+                }
+                if(levelSelector.getButtonClicked(e) == ButtonClicked.LEVEL_0) {
+                    gameBoard = new BoardLevel0();
+                    gameBoard.setVisible(true);
+                    add(gameBoard);
+                    gameBoard.requestFocusInWindow();
+                }
             } else if(gameBoard.isVisible() && gameBoard.getButtonClicked(e) == ButtonClicked.MAIN_MENU && !gameBoard.isInGame()) {
                 gameBoard.setVisible(false);
                 getContentPane().remove(gameBoard);
