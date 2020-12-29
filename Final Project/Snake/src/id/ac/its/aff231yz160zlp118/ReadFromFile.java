@@ -1,9 +1,8 @@
 package id.ac.its.aff231yz160zlp118;
 
-import java.io.IOException;
+import java.io.*;
 import java.nio.file.Paths;
-import java.util.NoSuchElementException;
-import java.util.Scanner;
+import java.util.*;
 
 public class ReadFromFile {
     public static int readScore(String filename) {

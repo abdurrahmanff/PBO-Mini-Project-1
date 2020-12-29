@@ -1,12 +1,7 @@
 package id.ac.its.aff231yz160zlp118;
 
 import javax.swing.JPanel;
-import java.awt.Color;
-import java.awt.Font;
-import java.awt.FontMetrics;
-import java.awt.Graphics;
-import java.awt.Graphics2D;
-import java.awt.Rectangle;
+import java.awt.*;
 import java.awt.event.MouseEvent;
 
 // Rectangle with centered horizontal layout
@@ -23,7 +18,8 @@ public class Button extends JPanel {
     private int yFrame;
     Rectangle frame;
 
-    public Button(int yCenter, int width, int height, int windowWidth, String buttonMsg) {
+    public Button(int yCenter, int width, int height, 
+    		int windowWidth, String buttonMsg) {
         this.yCenter = yCenter;
         this.width = width;
         this.height = height;

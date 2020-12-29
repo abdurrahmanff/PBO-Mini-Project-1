@@ -2,8 +2,7 @@ package id.ac.its.aff231yz160zlp118;
 
 import javax.swing.JPanel;
 import java.awt.*;
-import java.awt.event.KeyEvent;
-import java.awt.event.MouseEvent;
+import java.awt.event.*;
 
 public abstract class BasePanel extends JPanel {
     protected final int B_WIDTH = 300;

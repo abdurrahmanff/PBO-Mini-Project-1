@@ -10,7 +10,6 @@ public class CreditMenu extends BasePanel {
     Button mainMenuButton = new Button(135, 100, 50, B_WIDTH, "MAIN MENU");
     Button referenceButton = new Button(225, 100, 50, B_WIDTH, "REFERENCE");
 
-    @Override
     public void paintComponent(Graphics g) {
         g.setColor(Color.BLACK);
         g.fillRect(0, 0, B_WIDTH, B_HEIGHT);
@@ -27,7 +26,8 @@ public class CreditMenu extends BasePanel {
         mainMenuButton.drawComponent(g);
         referenceButton.drawComponent(g);
     }
-
+    
+    @Override
     public ButtonClicked getButtonClicked(MouseEvent e) {
         if(mainMenuButton.isClicked(e))
             return ButtonClicked.MAIN_MENU;
