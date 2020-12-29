@@ -1,6 +1,4 @@
-package id.ac.its.aff231yz160zlp118;
-
-import com.sun.tools.javac.Main;
+package id.ac.its.aff231yz160zlp118.snake;
 
 import java.awt.*;
 import java.awt.event.*;

@@ -1,10 +1,6 @@
-package id.ac.its.aff231yz160zlp118;
+package id.ac.its.aff231yz160zlp118.snake;
 
-import java.awt.BasicStroke;
-import java.awt.Color;
 import java.awt.Graphics;
-import java.awt.Graphics2D;
-import java.awt.Rectangle;
 import java.awt.Toolkit;
 
 import javax.swing.Timer;

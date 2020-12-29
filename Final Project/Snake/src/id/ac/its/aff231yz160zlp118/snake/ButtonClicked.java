@@ -1,4 +1,4 @@
-package id.ac.its.aff231yz160zlp118;
+package id.ac.its.aff231yz160zlp118.snake;
 
 public enum ButtonClicked {
     PLAY(1),

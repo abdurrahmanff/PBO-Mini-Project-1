@@ -1,9 +1,8 @@
-package id.ac.its.aff231yz160zlp118;
+package id.ac.its.aff231yz160zlp118.snake;
 
 import java.awt.*;
 import java.awt.event.*;
 import java.io.*;
-import java.nio.file.Paths;
 import java.util.*;
 import javax.swing.*;
 import javax.swing.Timer;
