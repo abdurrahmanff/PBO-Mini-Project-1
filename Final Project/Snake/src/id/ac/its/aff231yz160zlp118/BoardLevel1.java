@@ -16,14 +16,6 @@ public class BoardLevel1 extends Board {
 	        super();
 	        super.levelID = levelID;
 	 }
-	 
-	protected void drawBorder(Graphics g) {
-    	Rectangle border = new Rectangle(1,1,300,300);
-    	Graphics2D g2 = (Graphics2D) g;
-    	g2.setStroke(new BasicStroke(10));
-    	g2.setColor(Color.RED);
-    	g2.draw(border);
-    }
 	
 	@Override
 	protected void initGame() {

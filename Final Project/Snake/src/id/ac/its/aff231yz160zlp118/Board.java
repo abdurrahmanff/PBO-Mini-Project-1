@@ -37,8 +37,6 @@ public abstract class Board extends BasePanel implements ActionListener {
     protected Image head;
 
     protected abstract void initGame();
-    
-    protected abstract void drawBorder(Graphics g);
 
     protected abstract void doDrawing(Graphics g);
 
@@ -71,6 +69,14 @@ public abstract class Board extends BasePanel implements ActionListener {
         super.paintComponent(g);
 
         doDrawing(g);
+    }
+
+    protected void drawBorder(Graphics g) {
+        Rectangle border = new Rectangle(1,1,300,300);
+        Graphics2D g2 = (Graphics2D) g;
+        g2.setStroke(new BasicStroke(10));
+        g2.setColor(Color.RED);
+        g2.draw(border);
     }
 
     protected void gameOver(Graphics g) {
