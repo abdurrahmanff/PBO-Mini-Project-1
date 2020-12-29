@@ -90,6 +90,12 @@ public class Snake extends JFrame {
                     add(gameBoard);
                     gameBoard.requestFocusInWindow();
                 }
+                else if(levelSelector.getButtonClicked(e) == ButtonClicked.LEVEL_1) {
+                    gameBoard = new BoardLevel1();
+                    gameBoard.setVisible(true);
+                    add(gameBoard);
+                    gameBoard.requestFocusInWindow();
+                }
             } else if(highScoreStats.isVisible() && highScoreStats.getButtonClicked(e) == ButtonClicked.MAIN_MENU) {
                 highScoreStats.setVisible(false);
                 getContentPane().remove(highScoreStats);

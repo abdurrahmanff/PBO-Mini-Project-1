@@ -5,7 +5,7 @@ import java.awt.event.*;
 import java.io.*;
 import java.nio.file.Paths;
 import java.util.*;
-import javax.swing.ImageIcon;
+import javax.swing.*;
 import javax.swing.Timer;
 
 public abstract class Board extends BasePanel implements ActionListener {
@@ -37,12 +37,16 @@ public abstract class Board extends BasePanel implements ActionListener {
     protected Image head;
 
     protected abstract void initGame();
+    
+    protected abstract void drawBorder(Graphics g);
 
     protected abstract void doDrawing(Graphics g);
 
     protected abstract void checkCollision();
 
     protected abstract void locateApple();
+    
+    protected abstract void locateRottenApple();
 
     public Board() {
         super();
@@ -83,6 +87,16 @@ public abstract class Board extends BasePanel implements ActionListener {
         g.setFont(small);
         g.drawString(gameOver, (B_WIDTH - metr.stringWidth(gameOver)) / 2, B_HEIGHT / 2 - 60);
         g.drawString(highScoreStr, (B_WIDTH - metr.stringWidth(highScoreStr)) / 2, B_HEIGHT / 2 - 85);
+    }
+    
+    protected void showScore(Graphics g) {
+        String Score = String.format("Score : %d", dots);
+        Font small = new Font("Helvetica", Font.BOLD, 14);
+        FontMetrics metr = getFontMetrics(small);
+
+        g.setColor(Color.white);
+        g.setFont(small);
+        g.drawString(Score, 0, 0);
     }
 
     public boolean isInGame() {

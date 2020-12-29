@@ -4,7 +4,7 @@ import java.awt.*;
 import java.awt.event.MouseEvent;
 
 public class LevelSelector extends BasePanel {
-    private static final int banyakLevel = 1;
+    private static final int banyakLevel = 2;
     Button[] levelSelect = new Button[banyakLevel];
 
     public void paintComponent(Graphics g) {
@@ -26,6 +26,8 @@ public class LevelSelector extends BasePanel {
     public ButtonClicked getButtonClicked(MouseEvent e) {
         if(levelSelect[0].isClicked(e))
             return ButtonClicked.LEVEL_0;
+        else if(levelSelect[1].isClicked(e))
+        	return ButtonClicked.LEVEL_1;
         return ButtonClicked.NOT_CLICKED;
     }
 }

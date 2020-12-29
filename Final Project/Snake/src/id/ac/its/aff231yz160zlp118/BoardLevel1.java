@@ -1,27 +1,33 @@
 package id.ac.its.aff231yz160zlp118;
 
-import javax.swing.*;
-import java.awt.*;
+import java.awt.BasicStroke;
+import java.awt.Color;
+import java.awt.Graphics;
+import java.awt.Graphics2D;
+import java.awt.Rectangle;
+import java.awt.Toolkit;
 
-public class BoardLevel0 extends Board {
-    private final int levelID = 0;
+import javax.swing.Timer;
 
-    public BoardLevel0() {
-        super();
-        super.levelID = levelID;
-    }
-    
-    protected void drawBorder(Graphics g) {
+public class BoardLevel1 extends Board {
+	private final int levelID = 1;
+	
+	 public BoardLevel1() {
+	        super();
+	        super.levelID = levelID;
+	 }
+	 
+	protected void drawBorder(Graphics g) {
     	Rectangle border = new Rectangle(1,1,300,300);
     	Graphics2D g2 = (Graphics2D) g;
     	g2.setStroke(new BasicStroke(10));
     	g2.setColor(Color.RED);
     	g2.draw(border);
     }
-
-    @Override
-    protected void initGame() {
-        dots = 3;
+	
+	@Override
+	protected void initGame() {
+		dots = 20;
 
         for (int z = 0; z < dots; z++) {
             x[z] = 50 - z * 10;
@@ -32,11 +38,11 @@ public class BoardLevel0 extends Board {
 
         timer = new Timer(DELAY, this);
         timer.start();
-    }
+	}
 
-    @Override
-    protected void doDrawing(Graphics g) {
-        if (inGame) {
+	@Override
+	protected void doDrawing(Graphics g) {
+		if (inGame) {
             g.drawImage(apple, apple_x, apple_y, this);
             showScore(g);
             for (int z = 0; z < dots; z++) {
@@ -52,11 +58,12 @@ public class BoardLevel0 extends Board {
         } else {
             gameOver(g);
         }
-    }
 
-    @Override
-    protected void checkCollision() {
-        for (int z = dots; z > 0; z--) {
+	}
+
+	@Override
+	protected void checkCollision() {
+		for (int z = dots; z > 0; z--) {
             if ((z > 4) && (x[0] == x[z]) && (y[0] == y[z])) {
                 inGame = false;
             }
@@ -81,19 +88,21 @@ public class BoardLevel0 extends Board {
         if (!inGame) {
             timer.stop();
         }
-    }
+	}
 
-    @Override
-    protected void locateApple() {
+	@Override
+	protected void locateApple() {
         int r = (int) (Math.random() * RAND_POS);
         if(r<10||r>B_WIDTH-10||r>B_HEIGHT-10) r = (int) (Math.random() * RAND_POS);
         apple_x = ((r * DOT_SIZE));
 
         r = (int) (Math.random() * RAND_POS);
         apple_y = ((r * DOT_SIZE));
-    }
-    
-    @Override
-    protected void locateRottenApple() {
-    }
+	}
+	
+	@Override
+	protected void locateRottenApple() {
+		
+	}
+
 }

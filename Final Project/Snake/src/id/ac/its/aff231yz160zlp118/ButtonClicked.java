@@ -6,6 +6,7 @@ public enum ButtonClicked {
     MAIN_MENU(3),
     HIGH_SCORE(4),
     LEVEL_0(10),
+    LEVEL_1(11),
     REFERENCE(99),
     NOT_CLICKED(0);
 
