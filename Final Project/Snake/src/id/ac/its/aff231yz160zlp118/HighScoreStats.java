@@ -17,7 +17,7 @@ public class HighScoreStats extends BasePanel {
                     ReadFromFile.readScore("score" + Integer.toString(i) + ".txt"));
             g.setColor(Color.white);
             g.setFont(small);
-            g.drawString(tmp, (B_WIDTH - metr.stringWidth(tmp)) / 2, B_HEIGHT / 2 - 60);
+            g.drawString(tmp, (B_WIDTH - metr.stringWidth(tmp)) / 2, B_HEIGHT / 2 - 60 + 20 * i);
         }
         mainMenuButton.drawComponent(g);
     }
