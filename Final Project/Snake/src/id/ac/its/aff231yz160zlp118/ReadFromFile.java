@@ -13,6 +13,8 @@ public class ReadFromFile {
         } catch (IOException ioException) {
             score = 0;
         }
+        if(input == null)
+            return 0;
         try {
             score = input.nextInt();
         } catch (NoSuchElementException | IllegalStateException stateException) {
