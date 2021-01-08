@@ -170,8 +170,8 @@ public abstract class Board extends BasePanel implements ActionListener {
     private void gameOver(Graphics g) {
         String gameOver = "Game Over";
         getCurrentHighScore();
-        String highScoreStr = String.format("High Score : %d", (highScore > dots ? highScore : dots));
-        saveCurrentHighScore((highScore > dots ? highScore : dots));
+        String highScoreStr = String.format("High Score : %d", (highScore > (dots-3) ? highScore : (dots-3)));
+        saveCurrentHighScore((highScore > (dots-3) ? highScore : (dots-3)));
         Font small = new Font("Helvetica", Font.BOLD, 14);
         FontMetrics metr = getFontMetrics(small);
 
@@ -184,7 +184,7 @@ public abstract class Board extends BasePanel implements ActionListener {
     }
     
     private void showScore(Graphics g) {
-        String Score = String.format("Score : %d", dots);
+        String Score = String.format("Score : %d", (dots-3));
         Font small = new Font("Helvetica", Font.BOLD, 14);
         FontMetrics metr = getFontMetrics(small);
 

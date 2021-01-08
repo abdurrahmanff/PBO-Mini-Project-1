@@ -15,7 +15,7 @@ public class BoardLevel1 extends Board {
 	
 	@Override
     protected void initSnakeLength() {
-        dots = 20;
+        dots = 3;
     }
 
 }
