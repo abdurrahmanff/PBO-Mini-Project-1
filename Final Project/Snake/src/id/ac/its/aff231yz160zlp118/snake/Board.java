@@ -8,35 +8,35 @@ import javax.swing.*;
 import javax.swing.Timer;
 
 public abstract class Board extends BasePanel implements ActionListener {
-    protected final int DOT_SIZE = 10;
-    protected final int ALL_DOTS = 900;
-    protected final int RAND_POS = 29;
-    protected final int DELAY = 140;
+    private final int DOT_SIZE = 10;
+    private final int ALL_DOTS = 900;
+    private final int RAND_POS = 29;
+    private final int DELAY = 140;
 
     Button mainMenuButton = new Button(135, 100, 50, B_WIDTH, "MAIN MENU");
 
-    protected final int x[] = new int[ALL_DOTS];
-    protected final int y[] = new int[ALL_DOTS];
+    private final int x[] = new int[ALL_DOTS];
+    private final int y[] = new int[ALL_DOTS];
     protected Vector<Integer> obstacleX = new Vector<Integer>();
     protected Vector<Integer> obstacleY = new Vector<Integer>();
 
     protected int dots;
-    protected int apple_x;
-    protected int apple_y;
+    private int apple_x;
+    private int apple_y;
 
-    protected boolean leftDirection = false;
-    protected boolean rightDirection = true;
-    protected boolean upDirection = false;
-    protected boolean downDirection = false;
-    protected boolean inGame = true;
-    protected int highScore;
+    private boolean leftDirection = false;
+    private boolean rightDirection = true;
+    private boolean upDirection = false;
+    private boolean downDirection = false;
+    private boolean inGame = true;
+    private int highScore;
     protected int levelID;
 
-    protected Timer timer;
-    protected Image ball;
-    protected Image apple;
-    protected Image head;
-    protected Image obstacle;
+    private Timer timer;
+    private Image ball;
+    private Image apple;
+    private Image head;
+    private Image obstacle;
 
     protected abstract void setLevelID();
 
@@ -53,7 +53,7 @@ public abstract class Board extends BasePanel implements ActionListener {
         setObstaclePos();
     }
 
-    protected void initGame() {
+    private void initGame() {
         initSnakeLength();
         for (int z = 0; z < dots; z++) {
             x[z] = 50 - z * 10;
@@ -66,7 +66,7 @@ public abstract class Board extends BasePanel implements ActionListener {
         timer.start();
     }
 
-    protected void locateApple() {
+    private void locateApple() {
         int r = (int) (Math.random() * RAND_POS);
         if(r<10||r>B_WIDTH-10||r>B_HEIGHT-10) r = (int) (Math.random() * RAND_POS);
         apple_x = ((r * DOT_SIZE));
@@ -75,11 +75,11 @@ public abstract class Board extends BasePanel implements ActionListener {
         apple_y = ((r * DOT_SIZE));
     }
 
-    protected void locateRottenApple() {
+    private void locateRottenApple() {
 
     }
 
-    protected void loadImages() {
+    private void loadImages() {
         ImageIcon iid = new ImageIcon("src/resources/dot.jpg");
         ball = iid.getImage();
 
@@ -100,7 +100,7 @@ public abstract class Board extends BasePanel implements ActionListener {
         doDrawing(g);
     }
 
-    protected void doDrawing(Graphics g) {
+    private void doDrawing(Graphics g) {
         if (inGame) {
             g.drawImage(apple, apple_x, apple_y, this);
             drawObstacles(g);
@@ -121,7 +121,7 @@ public abstract class Board extends BasePanel implements ActionListener {
 
     }
 
-    protected void drawBorder(Graphics g) {
+    private void drawBorder(Graphics g) {
         Rectangle border = new Rectangle(1,1,300,300);
         Graphics2D g2 = (Graphics2D) g;
         g2.setStroke(new BasicStroke(10));
@@ -129,13 +129,13 @@ public abstract class Board extends BasePanel implements ActionListener {
         g2.draw(border);
     }
 
-    protected void drawObstacles(Graphics g) {
+    private void drawObstacles(Graphics g) {
         for(int i=0; i<obstacleX.size(); i++) {
             g.drawImage(obstacle, obstacleX.get(i), obstacleY.get(i), this);
         }
     }
 
-    protected void gameOver(Graphics g) {
+    private void gameOver(Graphics g) {
         String gameOver = "Game Over";
         getCurrentHighScore();
         String highScoreStr = String.format("High Score : %d", (highScore > dots ? highScore : dots));
@@ -151,7 +151,7 @@ public abstract class Board extends BasePanel implements ActionListener {
         g.drawString(highScoreStr, (B_WIDTH - metr.stringWidth(highScoreStr)) / 2, B_HEIGHT / 2 - 85);
     }
     
-    protected void showScore(Graphics g) {
+    private void showScore(Graphics g) {
         String Score = String.format("Score : %d", dots);
         Font small = new Font("Helvetica", Font.BOLD, 14);
         FontMetrics metr = getFontMetrics(small);
@@ -171,14 +171,14 @@ public abstract class Board extends BasePanel implements ActionListener {
         return ButtonClicked.NOT_CLICKED;
     }
 
-    protected void checkApple() {
+    private void checkApple() {
         if ((x[0] == apple_x) && (y[0] == apple_y)) {
             dots++;
             locateApple();
         }
     }
 
-    protected void move() {
+    private void move() {
         for (int z = dots; z > 0; z--) {
             x[z] = x[(z - 1)];
             y[z] = y[(z - 1)];
@@ -224,7 +224,7 @@ public abstract class Board extends BasePanel implements ActionListener {
             output.close();
     }
 
-    protected void checkCollision() {
+    private void checkCollision() {
         for (int z = dots; z > 0; z--) {
             if ((z > 4) && (x[0] == x[z]) && (y[0] == y[z])) {
                 inGame = false;
@@ -274,7 +274,7 @@ public abstract class Board extends BasePanel implements ActionListener {
         repaint();
     }
 
-    protected class TAdapter extends KeyAdapter {
+    private class TAdapter extends KeyAdapter {
         @Override
         public void keyPressed(KeyEvent e) {
             int key = e.getKeyCode();
