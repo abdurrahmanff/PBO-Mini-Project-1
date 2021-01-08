@@ -78,6 +78,8 @@ public abstract class Board extends BasePanel implements ActionListener {
         g2.draw(border);
     }
 
+    protected abstract void drawObstacles(Graphics g);
+
     protected void gameOver(Graphics g) {
         String gameOver = "Game Over";
         getCurrentHighScore();
@@ -101,7 +103,7 @@ public abstract class Board extends BasePanel implements ActionListener {
 
         g.setColor(Color.white);
         g.setFont(small);
-        g.drawString(Score, 0, 0);
+        g.drawString(Score, 15, 25);
     }
 
     public boolean isInGame() {

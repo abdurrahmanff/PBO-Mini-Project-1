@@ -76,6 +76,11 @@ public class BoardLevel0 extends Board {
     }
 
     @Override
+    protected void drawObstacles(Graphics g) {
+
+    }
+
+    @Override
     protected void locateApple() {
         int r = (int) (Math.random() * RAND_POS);
         if(r<10||r>B_WIDTH-10||r>B_HEIGHT-10) r = (int) (Math.random() * RAND_POS);

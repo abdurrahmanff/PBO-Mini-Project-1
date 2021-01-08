@@ -32,6 +32,7 @@ public class BoardLevel1 extends Board {
 	protected void doDrawing(Graphics g) {
 		if (inGame) {
             g.drawImage(apple, apple_x, apple_y, this);
+            drawObstacles(g);
             showScore(g);
             for (int z = 0; z < dots; z++) {
                 if (z == 0) {
@@ -77,6 +78,11 @@ public class BoardLevel1 extends Board {
             timer.stop();
         }
 	}
+
+    @Override
+    protected void drawObstacles(Graphics g) {
+
+    }
 
 	@Override
 	protected void locateApple() {
