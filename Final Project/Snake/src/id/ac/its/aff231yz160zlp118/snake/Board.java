@@ -10,8 +10,12 @@ import javax.swing.Timer;
 public abstract class Board extends BasePanel implements ActionListener {
     private final int DOT_SIZE = 10;
     private final int ALL_DOTS = 900;
-    private final int RAND_POS = 29;
+    private final int RAND_POS = 28;
     private final int DELAY = 140;
+    private final int appleMinXPos = 10;
+    private final int appleMaxXPos = 280;
+    private final int appleMinYPos = 10;
+    private final int appleMaxYPos = 280;
 
     Button mainMenuButton = new Button(135, 100, 50, B_WIDTH, "MAIN MENU");
 
@@ -67,16 +71,28 @@ public abstract class Board extends BasePanel implements ActionListener {
     }
 
     private void locateApple() {
-        int r = (int) (Math.random() * RAND_POS);
-        if(r<10||r>B_WIDTH-10||r>B_HEIGHT-10) r = (int) (Math.random() * RAND_POS);
-        apple_x = ((r * DOT_SIZE));
+        int appleXCandidate = ((int) (Math.random() * RAND_POS)) * DOT_SIZE + appleMinXPos;
+        while(!isAppleInProperXPos(appleXCandidate))
+            appleXCandidate = ((int) (Math.random() * RAND_POS)) * DOT_SIZE + appleMinXPos;
+        apple_x = appleXCandidate;
 
-        r = (int) (Math.random() * RAND_POS);
-        apple_y = ((r * DOT_SIZE));
+        int appleYCandidate = ((int) (Math.random() * RAND_POS)) * DOT_SIZE + appleMinYPos;
+        while(!isAppleInProperYPos(appleYCandidate)
+                && isCollideWithObstacles(apple_x, appleYCandidate))
+            appleYCandidate = ((int) (Math.random() * RAND_POS)) * DOT_SIZE + appleMinYPos;
+        apple_y = appleYCandidate;
     }
 
     private void locateRottenApple() {
 
+    }
+
+    private boolean isAppleInProperXPos(int x) {
+        return x >= appleMinXPos && x <= appleMaxXPos;
+    }
+
+    private boolean isAppleInProperYPos(int y) {
+        return y >= appleMinYPos && y <= appleMaxYPos;
     }
 
     private void loadImages() {
