@@ -78,7 +78,7 @@ public abstract class Board extends BasePanel implements ActionListener {
 
         int appleYCandidate = ((int) (Math.random() * RAND_POS)) * DOT_SIZE + appleMinYPos;
         while(!isAppleInProperYPos(appleYCandidate)
-                && isCollideWithObstacles(apple_x, appleYCandidate))
+                || isCollideWithObstacles(apple_x, appleYCandidate))
             appleYCandidate = ((int) (Math.random() * RAND_POS)) * DOT_SIZE + appleMinYPos;
         apple_y = appleYCandidate;
     }
