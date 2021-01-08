@@ -27,6 +27,8 @@ public abstract class Board extends BasePanel implements ActionListener {
     protected int dots;
     private int apple_x;
     private int apple_y;
+    private int appleXCandidate;
+    private int appleYCandidate;
 
     private boolean leftDirection = false;
     private boolean rightDirection = true;
@@ -70,21 +72,35 @@ public abstract class Board extends BasePanel implements ActionListener {
         timer.start();
     }
 
-    private void locateApple() {
+    private void randomizeApplePos() {
         int appleXCandidate = ((int) (Math.random() * RAND_POS)) * DOT_SIZE + appleMinXPos;
-        while(!isAppleInProperXPos(appleXCandidate))
-            appleXCandidate = ((int) (Math.random() * RAND_POS)) * DOT_SIZE + appleMinXPos;
-        apple_x = appleXCandidate;
-
         int appleYCandidate = ((int) (Math.random() * RAND_POS)) * DOT_SIZE + appleMinYPos;
-        while(!isAppleInProperYPos(appleYCandidate)
-                || isCollideWithObstacles(apple_x, appleYCandidate))
+        while(!isAppleInProperYPos(appleYCandidate) || !isAppleInProperXPos(appleXCandidate)
+                || isCollideWithObstacles(appleXCandidate, appleYCandidate)
+                || isAppleSpawnAtSnake(appleXCandidate, appleYCandidate)) {
             appleYCandidate = ((int) (Math.random() * RAND_POS)) * DOT_SIZE + appleMinYPos;
-        apple_y = appleYCandidate;
+            appleXCandidate = ((int) (Math.random() * RAND_POS)) * DOT_SIZE + appleMinXPos;
+        }
+        this.appleXCandidate = appleXCandidate;
+        this.appleYCandidate = appleYCandidate;
+    }
+
+    private void locateApple() {
+        randomizeApplePos();
+        apple_x = this.appleXCandidate;
+        apple_y = this.appleYCandidate;
     }
 
     private void locateRottenApple() {
 
+    }
+
+    private boolean isAppleSpawnAtSnake(int x, int y) {
+        for(int i=0; i<dots; i++) {
+            if(x == this.x[i] && y == this.y[i])
+                return true;
+        }
+        return false;
     }
 
     private boolean isAppleInProperXPos(int x) {

@@ -10,8 +10,7 @@ public class BoardLevel1 extends Board {
 
     @Override
     protected void setObstaclePos() {
-        obstacleX.add(286);
-        obstacleY.add(286);
+
     }
 	
 	@Override
