@@ -98,7 +98,9 @@ public abstract class Board extends BasePanel implements ActionListener {
         super.paintComponent(g);
 
         doDrawing(g);
-    }protected void doDrawing(Graphics g) {
+    }
+
+    protected void doDrawing(Graphics g) {
         if (inGame) {
             g.drawImage(apple, apple_x, apple_y, this);
             drawObstacles(g);
