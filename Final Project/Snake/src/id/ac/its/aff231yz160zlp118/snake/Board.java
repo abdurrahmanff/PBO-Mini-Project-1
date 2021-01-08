@@ -17,6 +17,8 @@ public abstract class Board extends BasePanel implements ActionListener {
 
     protected final int x[] = new int[ALL_DOTS];
     protected final int y[] = new int[ALL_DOTS];
+    protected Vector<Integer> obstacleX = new Vector<Integer>();
+    protected Vector<Integer> obstacleY = new Vector<Integer>();
 
     protected int dots;
     protected int apple_x;
@@ -34,22 +36,47 @@ public abstract class Board extends BasePanel implements ActionListener {
     protected Image ball;
     protected Image apple;
     protected Image head;
+    protected Image obstacle;
 
-    protected abstract void initGame();
+    protected abstract void setLevelID();
 
-    protected abstract void doDrawing(Graphics g);
+    protected abstract void setObstaclePos();
 
-    protected abstract void checkCollision();
-
-    protected abstract void locateApple();
-    
-    protected abstract void locateRottenApple();
+    protected abstract void initSnakeLength();
 
     public Board() {
         super();
         addKeyListener(new TAdapter());
         loadImages();
         initGame();
+        setLevelID();
+        setObstaclePos();
+    }
+
+    protected void initGame() {
+        initSnakeLength();
+        for (int z = 0; z < dots; z++) {
+            x[z] = 50 - z * 10;
+            y[z] = 50;
+        }
+
+        locateApple();
+
+        timer = new Timer(DELAY, this);
+        timer.start();
+    }
+
+    protected void locateApple() {
+        int r = (int) (Math.random() * RAND_POS);
+        if(r<10||r>B_WIDTH-10||r>B_HEIGHT-10) r = (int) (Math.random() * RAND_POS);
+        apple_x = ((r * DOT_SIZE));
+
+        r = (int) (Math.random() * RAND_POS);
+        apple_y = ((r * DOT_SIZE));
+    }
+
+    protected void locateRottenApple() {
+
     }
 
     protected void loadImages() {
@@ -61,6 +88,9 @@ public abstract class Board extends BasePanel implements ActionListener {
 
         ImageIcon iih = new ImageIcon("src/resources/head.jpg");
         head = iih.getImage();
+
+        ImageIcon obs = new ImageIcon("src/resources/obstacle.jpg");
+        obstacle = obs.getImage();
     }
 
     @Override
@@ -68,6 +98,25 @@ public abstract class Board extends BasePanel implements ActionListener {
         super.paintComponent(g);
 
         doDrawing(g);
+    }protected void doDrawing(Graphics g) {
+        if (inGame) {
+            g.drawImage(apple, apple_x, apple_y, this);
+            drawObstacles(g);
+            showScore(g);
+            for (int z = 0; z < dots; z++) {
+                if (z == 0) {
+                    g.drawImage(head, x[z], y[z], this);
+                } else {
+                    g.drawImage(ball, x[z], y[z], this);
+                }
+            }
+            drawBorder(g);
+            Toolkit.getDefaultToolkit().sync();
+
+        } else {
+            gameOver(g);
+        }
+
     }
 
     protected void drawBorder(Graphics g) {
@@ -78,7 +127,11 @@ public abstract class Board extends BasePanel implements ActionListener {
         g2.draw(border);
     }
 
-    protected abstract void drawObstacles(Graphics g);
+    protected void drawObstacles(Graphics g) {
+        for(int i=0; i<obstacleX.size(); i++) {
+            g.drawImage(obstacle, obstacleX.get(i), obstacleY.get(i), this);
+        }
+    }
 
     protected void gameOver(Graphics g) {
         String gameOver = "Game Over";
@@ -167,6 +220,45 @@ public abstract class Board extends BasePanel implements ActionListener {
         }
         if(output != null)
             output.close();
+    }
+
+    protected void checkCollision() {
+        for (int z = dots; z > 0; z--) {
+            if ((z > 4) && (x[0] == x[z]) && (y[0] == y[z])) {
+                inGame = false;
+            }
+        }
+
+        if(isCollideWithObstacles(x[0], y[0])) {
+            inGame = false;
+        }
+
+        if (y[0] >= B_HEIGHT-10) {
+            inGame = false;
+        }
+
+        if (y[0] < 10) {
+            inGame = false;
+        }
+
+        if (x[0] >= B_WIDTH-10) {
+            inGame = false;
+        }
+
+        if (x[0] < 10) {
+            inGame = false;
+        }
+
+        if (!inGame) {
+            timer.stop();
+        }
+    }
+
+    private boolean isCollideWithObstacles(int x, int y) {
+        for(int i=0; i<obstacleX.size(); i++)
+            if(x == obstacleX.get(i) && y == obstacleY.get(i))
+                return true;
+        return false;
     }
 
     @Override
