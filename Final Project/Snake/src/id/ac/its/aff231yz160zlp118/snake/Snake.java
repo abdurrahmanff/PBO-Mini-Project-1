@@ -11,7 +11,7 @@ public class Snake extends JFrame {
     BasePanel gameBoard;
     BasePanel mainMenu = new MainMenu();
     BasePanel creditMenu = new CreditMenu();
-    BasePanel levelSelector = new LevelSelector();
+    LevelSelector levelSelector = new LevelSelector();
     BasePanel highScoreStats = new HighScoreStats();
 
     public Snake() {
@@ -78,22 +78,14 @@ public class Snake extends JFrame {
                     }
                 }
             } else if (levelSelector.isVisible()) {
-                if(levelSelector.getButtonClicked(e) != ButtonClicked.NOT_CLICKED) {
+                if(levelSelector.getLevelToPlay(e) != -1) {
                     levelSelector.setVisible(false);
                     getContentPane().remove(levelSelector);
                 }
-                if(levelSelector.getButtonClicked(e) == ButtonClicked.LEVEL_0) {
-                    gameBoard = new BoardLevel0();
-                    gameBoard.setVisible(true);
-                    add(gameBoard);
-                    gameBoard.requestFocusInWindow();
-                }
-                else if(levelSelector.getButtonClicked(e) == ButtonClicked.LEVEL_1) {
-                    gameBoard = new BoardLevel1();
-                    gameBoard.setVisible(true);
-                    add(gameBoard);
-                    gameBoard.requestFocusInWindow();
-                }
+                gameBoard = new Board(levelSelector.getLevelToPlay(e));
+                gameBoard.setVisible(true);
+                add(gameBoard);
+                gameBoard.requestFocusInWindow();
             } else if(highScoreStats.isVisible() && highScoreStats.getButtonClicked(e) == ButtonClicked.MAIN_MENU) {
                 highScoreStats.setVisible(false);
                 getContentPane().remove(highScoreStats);

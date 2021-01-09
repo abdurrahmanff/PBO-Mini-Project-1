@@ -2,10 +2,32 @@ package id.ac.its.aff231yz160zlp118.snake;
 
 import java.awt.*;
 import java.awt.event.MouseEvent;
+import java.io.IOException;
+import java.nio.file.Paths;
+import java.util.Scanner;
 
 public class LevelSelector extends BasePanel {
-    private static final int banyakLevel = 2;
-    Button[] levelSelect = new Button[banyakLevel];
+    private static int banyakLevel;
+    Button[] levelSelect;
+
+    public LevelSelector() {
+        super();
+        banyakLevel = countLevel();
+        levelSelect = new Button[banyakLevel];
+    }
+
+    private int countLevel() {
+        Scanner input = null;
+
+        for(int i=0; ;i++) {
+            try {
+                input = new Scanner(Paths.get("assets/level/Level" + Integer.toString(i) + ".txt"));
+            } catch (IOException ioException) {
+                return i;
+            }
+            input.close();
+        }
+    }
 
     public void paintComponent(Graphics g) {
         super.paintComponent(g);
@@ -22,12 +44,10 @@ public class LevelSelector extends BasePanel {
         return banyakLevel;
     }
 
-    @Override
-    public ButtonClicked getButtonClicked(MouseEvent e) {
-        if(levelSelect[0].isClicked(e))
-            return ButtonClicked.LEVEL_0;
-        else if(levelSelect[1].isClicked(e))
-        	return ButtonClicked.LEVEL_1;
-        return ButtonClicked.NOT_CLICKED;
+    public int getLevelToPlay(MouseEvent e) {
+        for(int i=0; i<getBanyakLevel(); i++)
+            if(levelSelect[i].isClicked(e))
+                return i;
+        return -1;
     }
 }

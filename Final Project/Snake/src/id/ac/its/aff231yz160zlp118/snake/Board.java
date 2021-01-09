@@ -3,11 +3,12 @@ package id.ac.its.aff231yz160zlp118.snake;
 import java.awt.*;
 import java.awt.event.*;
 import java.io.*;
+import java.nio.file.Paths;
 import java.util.*;
 import javax.swing.*;
 import javax.swing.Timer;
 
-public abstract class Board extends BasePanel implements ActionListener {
+public class Board extends BasePanel implements ActionListener {
     private final int DOT_SIZE = 10;
     private final int ALL_DOTS = 900;
     private final int RAND_POS = 28;
@@ -44,19 +45,43 @@ public abstract class Board extends BasePanel implements ActionListener {
     private Image head;
     private Image obstacle;
 
-    protected abstract void setLevelID();
+//    protected abstract void setLevelID();
 
-    protected abstract void setObstaclePos();
+    private void setObstaclePos() {
+        Scanner input = null;
+        String filename = "assets/level/Level" + Integer.toString(levelID) + ".txt";
 
-    protected abstract void initSnakeLength();
+        try {
+            input = new Scanner(Paths.get(filename));
+        } catch (IOException ioException) {
+            System.err.println("Can't open " + filename);
+            return;
+        }
 
-    public Board() {
+        try {
+            int obstacle_count = input.nextInt();
+            for(int i=0; i<obstacle_count; i++) {
+                obstacleX.add(input.nextInt());
+                obstacleY.add(input.nextInt());
+            }
+        } catch (NoSuchElementException | IllegalStateException stateException) {
+            return;
+        }
+
+        input.close();
+    }
+
+    private void initSnakeLength() {
+        dots = 3;
+    }
+
+    public Board(int levelID) {
         super();
+        this.levelID = levelID;
+        setObstaclePos();
         addKeyListener(new TAdapter());
         loadImages();
         initGame();
-        setLevelID();
-        setObstaclePos();
     }
 
     private void initGame() {

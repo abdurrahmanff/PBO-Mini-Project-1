@@ -8,7 +8,9 @@ public abstract class BasePanel extends JPanel {
     protected final int B_WIDTH = 300;
     protected final int B_HEIGHT = 300;
 
-    public abstract ButtonClicked getButtonClicked(MouseEvent e);
+    public ButtonClicked getButtonClicked(MouseEvent e) {
+        return ButtonClicked.NOT_CLICKED;
+    }
 
     public BasePanel() {
         setBackground(Color.black);
