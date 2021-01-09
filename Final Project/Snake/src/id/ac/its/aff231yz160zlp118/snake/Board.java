@@ -87,8 +87,8 @@ public class Board extends BasePanel implements ActionListener {
     private void initGame() {
         initSnakeLength();
         for (int z = 0; z < dots; z++) {
-            x[z] = 50 - z * 10;
-            y[z] = 50;
+            x[z] = 150 - z * 10;
+            y[z] = 150;
         }
 
         locateApple();
@@ -182,7 +182,7 @@ public class Board extends BasePanel implements ActionListener {
         Rectangle border = new Rectangle(1,1,300,300);
         Graphics2D g2 = (Graphics2D) g;
         g2.setStroke(new BasicStroke(10));
-        g2.setColor(Color.RED);
+        g2.setColor(Color.BLACK);
         g2.draw(border);
     }
 
@@ -293,19 +293,19 @@ public class Board extends BasePanel implements ActionListener {
         }
 
         if (y[0] >= B_HEIGHT-10) {
-            inGame = false;
+            y[0] = 10;
         }
 
         if (y[0] < 10) {
-            inGame = false;
+        	y[0] = B_HEIGHT-10;
         }
 
         if (x[0] >= B_WIDTH-10) {
-            inGame = false;
+        	x[0] = 10;
         }
 
         if (x[0] < 10) {
-            inGame = false;
+        	x[0] = B_HEIGHT-10;
         }
 
         if (!inGame) {
