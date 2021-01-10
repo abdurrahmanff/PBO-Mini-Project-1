@@ -95,7 +95,8 @@ public class Board extends BasePanel implements ActionListener {
         }
 
         locateApple();
-
+        locateGoldenApple();
+        
         timer = new Timer(DELAY, this);
         timer.start();
     }
