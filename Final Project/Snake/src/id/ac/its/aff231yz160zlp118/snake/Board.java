@@ -153,7 +153,8 @@ public class Board extends BasePanel implements ActionListener {
     @Override
     public void paintComponent(Graphics g) {
         super.paintComponent(g);
-
+        g.setColor(Color.BLACK);
+        g.fillRect(0, 0, B_WIDTH, B_HEIGHT);
         doDrawing(g);
     }
 

@@ -1,19 +1,23 @@
 package id.ac.its.aff231yz160zlp118.snake;
 
+import javax.swing.*;
 import java.awt.*;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.awt.event.MouseEvent;
 import java.io.IOException;
 import java.nio.file.Paths;
 import java.util.Scanner;
 
-public class LevelSelector extends BasePanel {
+public class LevelSelector extends BasePanel implements ActionListener {
     private static int banyakLevel;
-    Button[] levelSelect;
+    BoxLayout layout = new BoxLayout(this, BoxLayout.Y_AXIS);
 
     public LevelSelector() {
         super();
         banyakLevel = countLevel();
-        levelSelect = new Button[banyakLevel];
+        setPreferredSize(new Dimension(300, ( banyakLevel > 2 ? 282 + 80 * (banyakLevel - 2) : 282)));
+        this.setLayout(layout);
     }
 
     private int countLevel() {
@@ -33,21 +37,19 @@ public class LevelSelector extends BasePanel {
         super.paintComponent(g);
         g.setColor(Color.BLACK);
         g.fillRect(0, 0, B_WIDTH, B_HEIGHT);
-        for(int i=0; i<banyakLevel; i++) {
-            levelSelect[i] = new Button(55 + 80 * i, 100, 50, B_WIDTH,
-                    "Level " + Integer.toString(i + 1));
-            levelSelect[i].drawComponent(g);
-        }
     }
 
     public static int getBanyakLevel() {
         return banyakLevel;
     }
 
-    public int getLevelToPlay(MouseEvent e) {
-        for(int i=0; i<getBanyakLevel(); i++)
-            if(levelSelect[i].isClicked(e))
-                return i;
-        return -1;
+    @Override
+    public void actionPerformed(ActionEvent e) {
+        for(int i=0; i<banyakLevel; i++) {
+            if(e.getActionCommand().equals("LEVEL " + Integer.toString(i + 1))) {
+                System.out.println("LEVEL " + Integer.toString(i + 1));
+                break;
+            }
+        }
     }
 }
