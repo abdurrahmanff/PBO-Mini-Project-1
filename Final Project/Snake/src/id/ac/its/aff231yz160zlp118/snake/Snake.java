@@ -132,7 +132,7 @@ public class Snake extends JFrame implements ActionListener {
                 getContentPane().remove(highScoreStats);
                 mainMenu.setVisible(true);
                 add(mainMenu);
-            } else if(gameBoard.isVisible() && !((Board)gameBoard).isInGame()) {
+            } else if(gameBoard.isVisible() && gameBoard.getButtonClicked(e) == ButtonClicked.MAIN_MENU && !((Board)gameBoard).isInGame()) {
                 gameBoard.setVisible(false);
                 getContentPane().remove(gameBoard);
                 mainMenu.setVisible(true);

@@ -9,7 +9,7 @@ import java.io.IOException;
 import java.nio.file.Paths;
 import java.util.Scanner;
 
-public class LevelSelector extends BasePanel implements ActionListener {
+public class LevelSelector extends BasePanel {
     private static int banyakLevel;
     BoxLayout layout = new BoxLayout(this, BoxLayout.Y_AXIS);
 
@@ -41,15 +41,5 @@ public class LevelSelector extends BasePanel implements ActionListener {
 
     public static int getBanyakLevel() {
         return banyakLevel;
-    }
-
-    @Override
-    public void actionPerformed(ActionEvent e) {
-        for(int i=0; i<banyakLevel; i++) {
-            if(e.getActionCommand().equals("LEVEL " + Integer.toString(i + 1))) {
-                System.out.println("LEVEL " + Integer.toString(i + 1));
-                break;
-            }
-        }
     }
 }
