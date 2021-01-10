@@ -170,7 +170,7 @@ public class Board extends BasePanel implements ActionListener {
     private void doDrawing(Graphics g) {
         if (inGame) {
             g.drawImage(apple, apple_x, apple_y, this);
-            if((dots-3)%7==0) g.drawImage(goldenApple, gapple_x, gapple_y, this);
+            if((dots-3)%7==0&&dots!=3) g.drawImage(goldenApple, gapple_x, gapple_y, this);
             drawObstacles(g);
             showScore(g);
             for (int z = 0; z < dots; z++) {
