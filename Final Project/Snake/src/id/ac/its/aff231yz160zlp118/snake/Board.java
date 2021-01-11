@@ -30,6 +30,8 @@ public class Board extends BasePanel implements ActionListener {
     private int apple_y;
     private int gapple_x;
     private int gapple_y;
+    private int rapple_x;
+    private int rapple_y;
     private int appleXCandidate;
     private int appleYCandidate;
 
@@ -47,6 +49,7 @@ public class Board extends BasePanel implements ActionListener {
     private Image head;
     private Image obstacle;
     private Image goldenApple;
+    private Image rottenApple;
 
 //    protected abstract void setLevelID();
 
@@ -96,6 +99,7 @@ public class Board extends BasePanel implements ActionListener {
 
         locateApple();
         locateGoldenApple();
+        locateRottenApple();
         
         timer = new Timer(DELAY, this);
         timer.start();
@@ -124,6 +128,12 @@ public class Board extends BasePanel implements ActionListener {
     	randomizeApplePos();
         gapple_x = this.appleXCandidate;
         gapple_y = this.appleYCandidate;
+    }
+    
+    private void locateRottenApple() {
+    	randomizeApplePos();
+    	rapple_x = this.appleXCandidate;
+    	rapple_y = this.appleYCandidate;
     }
 
     private boolean isAppleSpawnAtSnake(int x, int y) {
@@ -157,6 +167,9 @@ public class Board extends BasePanel implements ActionListener {
         
         ImageIcon iiga = new ImageIcon("src/resources/goldapple.jpg");
         goldenApple = iiga.getImage();
+        
+        ImageIcon iira = new ImageIcon("src/resources/GreenApple.jpg");
+        rottenApple = iira.getImage();
     }
 
     @Override
@@ -171,6 +184,7 @@ public class Board extends BasePanel implements ActionListener {
         if (inGame) {
             g.drawImage(apple, apple_x, apple_y, this);
             if((dots-3)%7==0&&dots!=3) g.drawImage(goldenApple, gapple_x, gapple_y, this);
+            if((dots-3)%5==0&&dots!=3) g.drawImage(rottenApple, rapple_x, rapple_y, this);
             drawObstacles(g);
             showScore(g);
             for (int z = 0; z < dots; z++) {
@@ -250,6 +264,13 @@ public class Board extends BasePanel implements ActionListener {
         if ((x[0] == gapple_x) && (y[0] == gapple_y)) {
             dots=dots+2;
             locateGoldenApple();
+        }
+    }
+    
+    private void checkRottenApple() {
+        if ((x[0] == rapple_x) && (y[0] == rapple_y)) {
+            dots=dots-2;
+            locateRottenApple();
         }
     }
 
@@ -343,6 +364,7 @@ public class Board extends BasePanel implements ActionListener {
         if (inGame) {
             checkApple();
             checkGoldenApple();
+            checkRottenApple();
             checkCollision();
             move();
         }
