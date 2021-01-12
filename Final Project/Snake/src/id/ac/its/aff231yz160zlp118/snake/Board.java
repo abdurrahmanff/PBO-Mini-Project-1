@@ -34,6 +34,7 @@ public class Board extends BasePanel implements ActionListener {
     private int rapple_y;
     private int appleXCandidate;
     private int appleYCandidate;
+    private int appleEaten;
 
     private boolean leftDirection = false;
     private boolean rightDirection = true;
@@ -96,13 +97,26 @@ public class Board extends BasePanel implements ActionListener {
             x[z] = 150 - z * 10;
             y[z] = 150;
         }
-
-        locateApple();
-        locateGoldenApple();
-        locateRottenApple();
+        
+        appleEaten = 0;
+        initApple();
+        resetGoldenApple();
+        resetRottenApple();
         
         timer = new Timer(DELAY, this);
         timer.start();
+    }
+    
+    private void initApple() {
+    	locateApple();
+    }
+    
+    private void resetGoldenApple() {
+    	gapple_x = gapple_y = 500;
+    }
+    
+    private void resetRottenApple() {
+    	rapple_x = rapple_y = 500;
     }
 
     private void randomizeApplePos() {
@@ -183,8 +197,10 @@ public class Board extends BasePanel implements ActionListener {
     private void doDrawing(Graphics g) {
         if (inGame) {
             g.drawImage(apple, apple_x, apple_y, this);
-            if((dots-3)%7==0&&dots!=3) g.drawImage(goldenApple, gapple_x, gapple_y, this);
-            if((dots-3)%5==0&&dots!=3) g.drawImage(rottenApple, rapple_x, rapple_y, this);
+            if(timeGoldenSpawn() || !isGoldenAppleEaten()) 
+            	g.drawImage(goldenApple, gapple_x, gapple_y, this);
+            if(timeRottenSpawn() || !isRottenAppleEaten()) 
+            	g.drawImage(rottenApple, rapple_x, rapple_y, this);
             drawObstacles(g);
             showScore(g);
             for (int z = 0; z < dots; z++) {
@@ -254,24 +270,63 @@ public class Board extends BasePanel implements ActionListener {
     }
 
     private void checkApple() {
-        if ((x[0] == apple_x) && (y[0] == apple_y)) {
+        if (isAppleEaten()) {
+        	appleEaten++;
             dots++;
             locateApple();
         }
     }
     
     private void checkGoldenApple() {
-        if ((x[0] == gapple_x) && (y[0] == gapple_y)) {
+        if (isGoldenAppleEaten()) {
+        	appleEaten++;
             dots=dots+2;
-            locateGoldenApple();
+            resetGoldenApple();
         }
+        if (timeGoldenSpawn() && isGoldenAppleNotSpawn())
+        	locateGoldenApple();
+        else if(!timeGoldenSpawn())
+        	resetGoldenApple();
     }
     
     private void checkRottenApple() {
-        if ((x[0] == rapple_x) && (y[0] == rapple_y)) {
+        if (isRottenAppleEaten()) {
+        	appleEaten++;
             dots=dots-2;
-            locateRottenApple();
+            resetRottenApple();
         }
+        if(timeRottenSpawn() && isRottenAppleNotSpawn())
+        	locateRottenApple();
+        else if(!timeRottenSpawn())
+        	resetRottenApple();
+    }
+    
+    private boolean isAppleEaten() {
+    	return ((x[0] == apple_x) && (y[0] == apple_y));
+    }
+    
+    private boolean isGoldenAppleEaten() {
+    	return ((x[0] == gapple_x) && (y[0] == gapple_y));
+    }
+    
+    private boolean isRottenAppleEaten() {
+    	return ((x[0] == rapple_x) && (y[0] == rapple_y));
+    }
+    
+    private boolean timeGoldenSpawn() {
+    	return (((appleEaten%3) == 0 || (appleEaten%4) == 0) && dots > 3);
+    }
+    
+    private boolean timeRottenSpawn() {
+    	return (((appleEaten%3) == 0 | (appleEaten%4) == 0 || (appleEaten%5) == 0 || (appleEaten%6) == 0) && dots > 3);
+    }
+    
+    private boolean isGoldenAppleNotSpawn() {
+    	return (gapple_x == 500 && gapple_y == 500);
+    }
+    
+    private boolean isRottenAppleNotSpawn() {
+    	return (rapple_x == 500 && rapple_y == 500);
     }
 
     private void move() {
