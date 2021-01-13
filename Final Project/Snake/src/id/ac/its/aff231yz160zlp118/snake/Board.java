@@ -1,11 +1,26 @@
 package id.ac.its.aff231yz160zlp118.snake;
 
-import java.awt.*;
-import java.awt.event.*;
-import java.io.*;
+import java.awt.BasicStroke;
+import java.awt.Color;
+import java.awt.Graphics;
+import java.awt.Graphics2D;
+import java.awt.Image;
+import java.awt.Rectangle;
+import java.awt.Toolkit;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+import java.awt.event.KeyAdapter;
+import java.awt.event.KeyEvent;
+import java.io.FileNotFoundException;
+import java.io.IOException;
 import java.nio.file.Paths;
-import java.util.*;
-import javax.swing.*;
+import java.util.Formatter;
+import java.util.FormatterClosedException;
+import java.util.NoSuchElementException;
+import java.util.Scanner;
+import java.util.Vector;
+import javax.swing.ImageIcon;
+import javax.swing.JButton;
 import javax.swing.Timer;
 
 public class Board extends BasePanel implements ActionListener {
@@ -17,8 +32,6 @@ public class Board extends BasePanel implements ActionListener {
     private final int appleMaxXPos = 280;
     private final int appleMinYPos = 10;
     private final int appleMaxYPos = 280;
-
-    Button mainMenuButton = new Button(135, 100, 50, B_WIDTH, "MAIN MENU");
 
     private final int x[] = new int[ALL_DOTS];
     private final int y[] = new int[ALL_DOTS];
@@ -52,8 +65,6 @@ public class Board extends BasePanel implements ActionListener {
     private Image goldenApple;
     private Image rottenApple;
 
-//    protected abstract void setLevelID();
-
     private void setObstaclePos() {
         Scanner input = null;
         String filename = "assets/level/Level" + Integer.toString(levelID) + ".txt";
@@ -82,8 +93,8 @@ public class Board extends BasePanel implements ActionListener {
         dots = 3;
     }
 
-    public Board(int levelID) {
-        super();
+    public Board(int levelID, Snake mainClass) {
+        super(mainClass);
         this.levelID = levelID;
         setObstaclePos();
         addKeyListener(new TAdapter());
@@ -238,10 +249,12 @@ public class Board extends BasePanel implements ActionListener {
         getCurrentHighScore();
         String highScoreStr = String.format("High Score : %d", (highScore > (dots-3) ? highScore : (dots-3)));
         saveCurrentHighScore((highScore > (dots-3) ? highScore : (dots-3)));
-        Font small = new Font("Helvetica", Font.BOLD, 14);
-        FontMetrics metr = getFontMetrics(small);
 
-        mainMenuButton.drawComponent(g);
+        JButton mainMenuButton = new JButton("MAIN MENU");
+        mainMenuButton.setBounds(98, 130,100, 50);
+        setButtonStyle(mainMenuButton);
+        mainMenuButton.addActionListener(this);
+        add(mainMenuButton);
 
         g.setColor(Color.white);
         g.setFont(small);
@@ -251,8 +264,6 @@ public class Board extends BasePanel implements ActionListener {
     
     private void showScore(Graphics g) {
         String Score = String.format("Score : %d", (dots-3));
-        Font small = new Font("Helvetica", Font.BOLD, 14);
-        FontMetrics metr = getFontMetrics(small);
 
         g.setColor(Color.white);
         g.setFont(small);
@@ -261,12 +272,6 @@ public class Board extends BasePanel implements ActionListener {
 
     public boolean isInGame() {
         return inGame;
-    }
-
-    public ButtonClicked getButtonClicked(MouseEvent e) {
-        if(mainMenuButton.isClicked(e))
-            return ButtonClicked.MAIN_MENU;
-        return ButtonClicked.NOT_CLICKED;
     }
 
     private void checkApple() {
@@ -422,6 +427,9 @@ public class Board extends BasePanel implements ActionListener {
             checkRottenApple();
             checkCollision();
             move();
+        } else {
+            mainClass.closeGameBoard();
+            mainClass.openMainMenu();
         }
 
         repaint();
