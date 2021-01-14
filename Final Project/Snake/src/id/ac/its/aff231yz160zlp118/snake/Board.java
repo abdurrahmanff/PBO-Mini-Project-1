@@ -240,21 +240,12 @@ public class Board extends BasePanel implements ActionListener {
                     g.drawImage(ball, x[z], y[z], this);
                 }
             }
-            drawBorder(g);
             Toolkit.getDefaultToolkit().sync();
 
         } else {
             gameOver(g);
         }
 
-    }
-
-    private void drawBorder(Graphics g) {
-        Rectangle border = new Rectangle(1,1,300,300);
-        Graphics2D g2 = (Graphics2D) g;
-        g2.setStroke(new BasicStroke(10));
-        g2.setColor(Color.BLACK);
-        g2.draw(border);
     }
 
     private void drawObstacles(Graphics g) {
@@ -351,11 +342,11 @@ public class Board extends BasePanel implements ActionListener {
     }
     
     private boolean timeGoldenSpawn() {
-    	return (((appleEaten%3) == 0 || (appleEaten%4) == 0) && dots > 3);
+    	return (((appleEaten%3) == 0 || (appleEaten%4) == 0) && dots > 4);
     }
     
     private boolean timeRottenSpawn() {
-    	return (((appleEaten%3) == 0 | (appleEaten%4) == 0 || (appleEaten%5) == 0 || (appleEaten%6) == 0) && dots > 3);
+    	return (((appleEaten%3) == 0 | (appleEaten%4) == 0 || (appleEaten%5) == 0 || (appleEaten%6) == 0) && dots > 4);
     }
     
     private boolean timeSkullSpawn() {
@@ -431,20 +422,20 @@ public class Board extends BasePanel implements ActionListener {
             inGame = false;
         }
 
-        if (y[0] >= B_HEIGHT-10) {
-            y[0] = 10;
+        if (y[0] >= B_HEIGHT) {
+            y[0] = 0;
         }
 
-        if (y[0] < 10) {
-        	y[0] = B_HEIGHT-10;
+        if (y[0] < 0) {
+        	y[0] = B_HEIGHT;
         }
 
-        if (x[0] >= B_WIDTH-10) {
-        	x[0] = 10;
+        if (x[0] >= B_WIDTH) {
+        	x[0] = 0;
         }
 
-        if (x[0] < 10) {
-        	x[0] = B_HEIGHT-10;
+        if (x[0] < 0) {
+        	x[0] = B_HEIGHT;
         }
 
         if (!inGame) {
