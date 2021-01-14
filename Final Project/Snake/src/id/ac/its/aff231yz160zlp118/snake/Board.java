@@ -45,6 +45,8 @@ public class Board extends BasePanel implements ActionListener {
     private int gapple_y;
     private int rapple_x;
     private int rapple_y;
+    private int skull_x;
+    private int skull_y;
     private int appleXCandidate;
     private int appleYCandidate;
     private int appleEaten;
@@ -64,6 +66,7 @@ public class Board extends BasePanel implements ActionListener {
     private Image obstacle;
     private Image goldenApple;
     private Image rottenApple;
+    private Image skull;
 
     private void setObstaclePos() {
         Scanner input = null;
@@ -113,6 +116,7 @@ public class Board extends BasePanel implements ActionListener {
         initApple();
         resetGoldenApple();
         resetRottenApple();
+        resetSkull();
         
         timer = new Timer(DELAY, this);
         timer.start();
@@ -128,6 +132,10 @@ public class Board extends BasePanel implements ActionListener {
     
     private void resetRottenApple() {
     	rapple_x = rapple_y = 500;
+    }
+    
+    private void resetSkull() {
+    	skull_x = skull_y = 500;
     }
 
     private void randomizeApplePos() {
@@ -159,6 +167,12 @@ public class Board extends BasePanel implements ActionListener {
     	randomizeApplePos();
     	rapple_x = this.appleXCandidate;
     	rapple_y = this.appleYCandidate;
+    }
+    
+    private void locateSkull() {
+    	randomizeApplePos();
+    	skull_x = this.appleXCandidate;
+    	skull_y = this.appleYCandidate;
     }
 
     private boolean isAppleSpawnAtSnake(int x, int y) {
@@ -195,6 +209,9 @@ public class Board extends BasePanel implements ActionListener {
         
         ImageIcon iira = new ImageIcon("src/resources/GreenApple.jpg");
         rottenApple = iira.getImage();
+        
+        ImageIcon iis = new ImageIcon("src/resources/skull.png");
+        skull = iis.getImage();
     }
 
     @Override
@@ -212,6 +229,8 @@ public class Board extends BasePanel implements ActionListener {
             	g.drawImage(goldenApple, gapple_x, gapple_y, this);
             if(timeRottenSpawn() || !isRottenAppleEaten()) 
             	g.drawImage(rottenApple, rapple_x, rapple_y, this);
+            if(timeSkullSpawn() || !isSkullEaten())
+            	g.drawImage(skull, skull_x, skull_y, this);
             drawObstacles(g);
             showScore(g);
             for (int z = 0; z < dots; z++) {
@@ -306,6 +325,15 @@ public class Board extends BasePanel implements ActionListener {
         	resetRottenApple();
     }
     
+    private void checkSkull() {
+    	if (isSkullEaten())
+    		inGame = false;
+    	if(timeSkullSpawn() && isSkullNotSpawn())
+        	locateSkull();
+        else if(!timeSkullSpawn())
+        	resetSkull();
+    }
+    
     private boolean isAppleEaten() {
     	return ((x[0] == apple_x) && (y[0] == apple_y));
     }
@@ -318,6 +346,10 @@ public class Board extends BasePanel implements ActionListener {
     	return ((x[0] == rapple_x) && (y[0] == rapple_y));
     }
     
+    private boolean isSkullEaten() {
+    	return ((x[0] == skull_x) && (y[0] == skull_y));
+    }
+    
     private boolean timeGoldenSpawn() {
     	return (((appleEaten%3) == 0 || (appleEaten%4) == 0) && dots > 3);
     }
@@ -326,12 +358,20 @@ public class Board extends BasePanel implements ActionListener {
     	return (((appleEaten%3) == 0 | (appleEaten%4) == 0 || (appleEaten%5) == 0 || (appleEaten%6) == 0) && dots > 3);
     }
     
+    private boolean timeSkullSpawn() {
+    	return ((appleEaten%10) == 0 && dots > 3);
+    }
+    
     private boolean isGoldenAppleNotSpawn() {
     	return (gapple_x == 500 && gapple_y == 500);
     }
     
     private boolean isRottenAppleNotSpawn() {
     	return (rapple_x == 500 && rapple_y == 500);
+    }
+    
+    private boolean isSkullNotSpawn() {
+    	return (skull_x == 500 && skull_y == 500);
     }
 
     private void move() {
@@ -425,6 +465,7 @@ public class Board extends BasePanel implements ActionListener {
             checkApple();
             checkGoldenApple();
             checkRottenApple();
+            checkSkull();
             checkCollision();
             move();
         } else {
