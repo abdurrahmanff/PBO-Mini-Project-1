@@ -9,12 +9,12 @@ import javax.swing.JFrame;
 import javax.swing.JScrollPane;
 
 public class Snake extends JFrame {
-    private Board gameBoard;
-    private MainMenu mainMenu = new MainMenu(this);
-    private HelpMenu helpMenu = new HelpMenu(this);
-    private CreditMenu creditMenu = new CreditMenu(this);
-    private LevelSelector levelSelector = new LevelSelector(this);
-    private HighScoreStatsMenu highScoreStatsMenu = new HighScoreStatsMenu(this);
+    private BasePanel gameBoard;
+    private BasePanel mainMenu = new MainMenu(this);
+    private BasePanel helpMenu = new HelpMenu(this);
+    private BasePanel creditMenu = new CreditMenu(this);
+    private BasePanel levelSelector = new LevelSelector(this);
+    private BasePanel highScoreStatsMenu = new HighScoreStatsMenu(this);
     private JScrollPane jScrollPane = new JScrollPane(levelSelector, JScrollPane.VERTICAL_SCROLLBAR_AS_NEEDED, JScrollPane.HORIZONTAL_SCROLLBAR_NEVER);
 
     private Snake() {
