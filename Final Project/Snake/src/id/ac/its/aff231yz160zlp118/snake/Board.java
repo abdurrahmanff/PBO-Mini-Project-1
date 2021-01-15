@@ -1,21 +1,17 @@
 package id.ac.its.aff231yz160zlp118.snake;
 
-import java.awt.BasicStroke;
 import java.awt.Color;
 import java.awt.Graphics;
-import java.awt.Graphics2D;
 import java.awt.Image;
-import java.awt.Rectangle;
 import java.awt.Toolkit;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
-import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
 import java.io.IOException;
+import java.io.ObjectOutputStream;
 import java.nio.file.Paths;
-import java.util.Formatter;
-import java.util.FormatterClosedException;
 import java.util.NoSuchElementException;
 import java.util.Scanner;
 import java.util.Vector;
@@ -35,10 +31,10 @@ public class Board extends BasePanel implements ActionListener {
 
     private final int x[] = new int[ALL_DOTS];
     private final int y[] = new int[ALL_DOTS];
-    protected Vector<Integer> obstacleX = new Vector<Integer>();
-    protected Vector<Integer> obstacleY = new Vector<Integer>();
+    private Vector<Integer> obstacleX = new Vector<Integer>();
+    private Vector<Integer> obstacleY = new Vector<Integer>();
 
-    protected int dots;
+    private int dots;
     private int apple_x;
     private int apple_y;
     private int gapple_x;
@@ -56,8 +52,8 @@ public class Board extends BasePanel implements ActionListener {
     private boolean upDirection = false;
     private boolean downDirection = false;
     private boolean inGame = true;
-    private int highScore;
-    protected int levelID;
+    private int levelID;
+    private HighScore highScore;
 
     private Timer timer;
     private Image ball;
@@ -256,12 +252,21 @@ public class Board extends BasePanel implements ActionListener {
 
     private void gameOver(Graphics g) {
         String gameOver = "Game Over";
-        getCurrentHighScore();
-        String highScoreStr = String.format("High Score : %d", (highScore > (dots-3) ? highScore : (dots-3)));
-        saveCurrentHighScore((highScore > (dots-3) ? highScore : (dots-3)));
+        highScore = LoadFromFile.loadScore();
+        highScore.checkForBanyakLevelChanges();
+        String highScoreStr = String.format("High Score : %d", (highScore.getHighScore(levelID) > (dots-3) ? highScore.getHighScore(levelID) : (dots-3)));
+        highScore.updateHighScore(levelID, (highScore.getHighScore(levelID) > (dots-3) ? highScore.getHighScore(levelID) : (dots-3)));
+        saveHighScore();
+
+
+        JButton playAgainButton = new JButton("PLAY AGAIN");
+        playAgainButton.setBounds(98, 130,100, 50);
+        setButtonStyle(playAgainButton);
+        playAgainButton.addActionListener(this);
+        add(playAgainButton);
 
         JButton mainMenuButton = new JButton("MAIN MENU");
-        mainMenuButton.setBounds(98, 130,100, 50);
+        mainMenuButton.setBounds(98, 210,100, 50);
         setButtonStyle(mainMenuButton);
         mainMenuButton.addActionListener(this);
         add(mainMenuButton);
@@ -278,10 +283,6 @@ public class Board extends BasePanel implements ActionListener {
         g.setColor(Color.white);
         g.setFont(small);
         g.drawString(Score, 15, 25);
-    }
-
-    public boolean isInGame() {
-        return inGame;
     }
 
     private void checkApple() {
@@ -384,31 +385,18 @@ public class Board extends BasePanel implements ActionListener {
             y[0] += DOT_SIZE;
     }
 
-    private void getCurrentHighScore() {
-        Scanner input = null;
-        highScore = ReadFromFile.readScore("score" + Integer.toString(levelID) + ".txt");
-    }
+    private void saveHighScore() {
+        try {
+            FileOutputStream fileOutputStream = new FileOutputStream("data/highscorestats.ser");
+            ObjectOutputStream outputStream = new ObjectOutputStream(fileOutputStream);
 
-    private void saveCurrentHighScore(int currentHighScore) {
-        Formatter output = null;
-        try {
-            output = new Formatter("score" + Integer.toString(levelID) + ".txt");
-        } catch (SecurityException securityException) {
-            System.err.println("Write permission denied. Terminating.");
-            System.exit(1);
-        } catch (FileNotFoundException fileNotFoundException) {
-            System.err.println("Error opening file. Terminating.");
-            System.exit(1);
+            outputStream.writeObject(highScore);
+
+            outputStream.close();
+            fileOutputStream.close();
+        } catch (IOException ioException) {
+            System.out.println("Error when saving file");
         }
-        try {
-            output.format("%d", currentHighScore);
-        } catch (FormatterClosedException formatterClosedException) {
-            System.err.println("Error writing to file. Terminating.");
-        } catch (NoSuchElementException elementException) {
-            System.err.println("Invalid input. Please try again");
-        }
-        if(output != null)
-            output.close();
     }
 
     private void checkCollision() {
@@ -459,9 +447,12 @@ public class Board extends BasePanel implements ActionListener {
             checkSkull();
             checkCollision();
             move();
-        } else {
+        } else if(e.getActionCommand().equals("MAIN MENU")) {
             mainClass.closeGameBoard();
             mainClass.openMainMenu();
+        } else if(e.getActionCommand().equals("PLAY AGAIN")) {
+            mainClass.closeGameBoard();
+            mainClass.playSnake(levelID);
         }
 
         repaint();

@@ -12,10 +12,21 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
 public class HelpMenu extends BasePanel implements ActionListener {
+	JButton[] buttons = new JButton[2];
 
 	public HelpMenu(Snake mainClass) {
 		super(mainClass);
-		// TODO Auto-generated constructor stub
+		buttons[0] = new JButton("PLAY");
+		buttons[1] = new JButton("MAIN MENU");
+		this.setLayout(new BoxLayout(this, BoxLayout.Y_AXIS));
+		add(Box.createRigidArea(new Dimension(1, 160)));
+		for(int i=0; i<buttons.length; i++) {
+			buttons[i].setAlignmentX(Component.CENTER_ALIGNMENT);
+			setButtonStyle(buttons[i]);
+			buttons[i].addActionListener(this);
+			add(buttons[i]);
+			add(Box.createRigidArea(new Dimension(1, 20)));
+		}
 	}
 	
 	public void paintComponent(Graphics g) {
@@ -33,8 +44,10 @@ public class HelpMenu extends BasePanel implements ActionListener {
 	}
 	@Override
 	public void actionPerformed(ActionEvent e) {
-		// TODO Auto-generated method stub
-		
+		mainClass.closeHelpMenu();
+		if(e.getActionCommand().equals("PLAY"))
+			mainClass.openLevelSelector();
+		else mainClass.openMainMenu();
 	}
 
 }

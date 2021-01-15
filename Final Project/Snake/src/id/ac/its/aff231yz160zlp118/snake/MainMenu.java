@@ -11,18 +11,19 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
 public class MainMenu extends BasePanel implements ActionListener {
-    JButton[] buttons = new JButton[3];
+    JButton[] buttons = new JButton[4];
 
     public MainMenu(Snake mainClass) {
         super(mainClass);
         buttons[0] = new JButton("PLAY");
-        buttons[1] = new JButton("CREDITS");
-        buttons[2] = new JButton("STATISTICS");
+        buttons[1] = new JButton("HELP");
+        buttons[2] = new JButton("CREDITS");
+        buttons[3] = new JButton("STATISTICS");
         this.setLayout(new BoxLayout(this, BoxLayout.Y_AXIS));
         for(int i=0; i<buttons.length; i++) {
-            add(Box.createRigidArea(new Dimension(1, 30)));
+            add(Box.createRigidArea(new Dimension(1, 20)));
             buttons[i].setAlignmentX(Component.CENTER_ALIGNMENT);
-            buttons[i].setBounds(98, 40 + 80*i, 100, 50);
+            buttons[i].setBounds(98, 30 + 70*i, 100, 50);
             setButtonStyle(buttons[i]);
             buttons[i].addActionListener(this);
             add(buttons[i]);
@@ -45,5 +46,7 @@ public class MainMenu extends BasePanel implements ActionListener {
             mainClass.openCreditMenu();
         else if(e.getActionCommand() == "STATISTICS")
             mainClass.openHighScoreStats();
+        else if(e.getActionCommand() == "HELP")
+            mainClass.openHelpMenu();
     }
 }

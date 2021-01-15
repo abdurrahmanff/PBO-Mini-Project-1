@@ -49,7 +49,7 @@ public class LevelSelector extends BasePanel implements ActionListener {
             add(levelSelectRev2[i]);
         }
         add(Box.createRigidArea(new Dimension(1, 30)));
-        JButton mainMenuButton = new JButton("BACK");
+        JButton mainMenuButton = new JButton("MAIN MENU");
         mainMenuButton.setMaximumSize(buttonDimension);
         mainMenuButton.setAlignmentX(Component.CENTER_ALIGNMENT);
         setButtonStyle(mainMenuButton);
@@ -76,7 +76,7 @@ public class LevelSelector extends BasePanel implements ActionListener {
                 break;
             }
         }
-        if(e.getActionCommand().equals("BACK"))
+        if(e.getActionCommand().equals("MAIN MENU"))
             mainClass.openMainMenu();
     }
 }

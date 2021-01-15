@@ -11,9 +11,10 @@ import javax.swing.JScrollPane;
 public class Snake extends JFrame {
     private Board gameBoard;
     private MainMenu mainMenu = new MainMenu(this);
+    private HelpMenu helpMenu = new HelpMenu(this);
     private CreditMenu creditMenu = new CreditMenu(this);
     private LevelSelector levelSelector = new LevelSelector(this);
-    private HighScoreStats highScoreStats = new HighScoreStats(this);
+    private HighScoreStatsMenu highScoreStatsMenu = new HighScoreStatsMenu(this);
     private JScrollPane jScrollPane = new JScrollPane(levelSelector, JScrollPane.VERTICAL_SCROLLBAR_AS_NEEDED, JScrollPane.HORIZONTAL_SCROLLBAR_NEVER);
 
     private Snake() {
@@ -24,7 +25,7 @@ public class Snake extends JFrame {
         mainMenu = new MainMenu(this);
         creditMenu.setVisible(false);
         levelSelector.setVisible(false);
-        highScoreStats.setVisible(false);
+        highScoreStatsMenu.setVisible(false);
         mainMenu.setVisible(true);
         add(mainMenu);
 
@@ -88,13 +89,23 @@ public class Snake extends JFrame {
     }
 
     public void openHighScoreStats() {
-        highScoreStats.setVisible(true);
-        add(highScoreStats);
+        highScoreStatsMenu.setVisible(true);
+        add(highScoreStatsMenu);
     }
 
     public void closeHighScoreStats() {
-        highScoreStats.setVisible(false);
-        getContentPane().remove(highScoreStats);
+        highScoreStatsMenu.setVisible(false);
+        getContentPane().remove(highScoreStatsMenu);
+    }
+
+    public void openHelpMenu() {
+        helpMenu.setVisible(true);
+        add(helpMenu);
+    }
+
+    public void closeHelpMenu() {
+        helpMenu.setVisible(false);
+        getContentPane().remove(helpMenu);
     }
 
     public void openReference() {
