@@ -8,7 +8,7 @@ public class LoadFromFile {
     public static HighScore loadScore() {
         HighScore ret = null;
         try {
-            FileInputStream fileInputStream = new FileInputStream("data/highscorestats.ser");
+            FileInputStream fileInputStream = new FileInputStream("highscorestats.ser");
             ObjectInputStream objectInputStream = new ObjectInputStream(fileInputStream);
 
             ret = (HighScore) objectInputStream.readObject();

@@ -387,7 +387,7 @@ public class Board extends BasePanel implements ActionListener {
 
     private void saveHighScore() {
         try {
-            FileOutputStream fileOutputStream = new FileOutputStream("data/highscorestats.ser");
+            FileOutputStream fileOutputStream = new FileOutputStream("highscorestats.ser");
             ObjectOutputStream outputStream = new ObjectOutputStream(fileOutputStream);
 
             outputStream.writeObject(highScore);
