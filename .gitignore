@@ -33,11 +33,5 @@ Final Project/Snake/bin1/resources/GreenApple.jpg
 Final Project/Snake/bin1/resources/head.jpg
 Final Project/Snake/bin1/resources/obstacle.jpg
 Final Project/Snake/bin1/resources/skull.png
-Final Project/Snake/out/production/Snake/resources/obstacle.jpg
-Final Project/Snake/out/production/Snake/resources/head.png
-Final Project/Snake/out/production/Snake/resources/head.jpg
-Final Project/Snake/out/production/Snake/resources/goldapple.jpg
-Final Project/Snake/out/production/Snake/resources/dot.png
-Final Project/Snake/out/production/Snake/resources/dot.jpg
-Final Project/Snake/out/production/Snake/resources/apple.png
-Final Project/Snake/out/production/Snake/resources/apple.jpg
+Final Project/Snake/out/*
+*.ser
