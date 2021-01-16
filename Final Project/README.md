@@ -51,3 +51,6 @@ Sumber utama *logic game* : <a href="http://zetcode.com/javagames/snake/">zetcod
 - Membuat ular berpindah ke bagian berlawanan apabila menabrak ujung jendela permainan.
 - Membuat aset tersendiri untuk level maupun gambar.
 - Penggunaan kelas Desktop untuk membuka link di tab baru dari browser.
+
+## Dokumentasi
+Video dokumentasi <a href="https://youtu.be/vtiD8cG7vMA">YouTube</a>
